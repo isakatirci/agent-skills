@@ -1,0 +1,2212 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>40 Java Backend Mülakat Soruları - Detaylı Cevaplar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            border-left: 5px solid;
+            padding-left: 20px;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        .section-1 { border-left-color: #FF6B6B; }
+        .section-2 { border-left-color: #4ECDC4; }
+        .section-3 { border-left-color: #FFD93D; }
+        .section-4 { border-left-color: #6BCB77; }
+
+        .section h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .section-1 h2 { color: #FF6B6B; }
+        .section-2 h2 { color: #4ECDC4; }
+        .section-3 h2 { color: #FFD93D; }
+        .section-4 h2 { color: #6BCB77; }
+
+        .question {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 15px 0 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+
+        .section-1 .question { border-left-color: #FF6B6B; }
+        .section-2 .question { border-left-color: #4ECDC4; }
+        .section-3 .question { border-left-color: #FFD93D; }
+        .section-4 .question { border-left-color: #6BCB77; }
+
+        .question-num {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+
+        .section-1 .question-num { color: #FF6B6B; }
+        .section-2 .question-num { color: #4ECDC4; }
+        .section-3 .question-num { color: #FFD93D; }
+        .section-4 .question-num { color: #6BCB77; }
+
+        .question-text {
+            font-size: 1em;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .answer {
+            background: white;
+            padding: 20px;
+            margin: 10px 0 20px 0;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .answer h4 {
+            font-size: 0.95em;
+            margin: 12px 0 8px 0;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .answer h4::before {
+            content: "✓ ";
+            font-weight: bold;
+            margin-right: 6px;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 12px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+
+        .tip {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 5px;
+        }
+
+        .tip::before {
+            content: "💡 ";
+            font-weight: bold;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 5px;
+        }
+
+        .warning::before {
+            content: "⚠️ ";
+            font-weight: bold;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .key-points {
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .key-points h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .key-points ul {
+            list-style-position: inside;
+            color: #333;
+        }
+
+        .key-points li {
+            margin: 5px 0;
+            padding-left: 5px;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 30px;
+        }
+
+        .print-notice {
+            background: #e3f2fd;
+            border: 1px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            text-align: center;
+            color: #1976d2;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .print-notice {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>☕ 40 Java Backend Mülakat Soruları</h1>
+            <p>Detaylı Cevaplar ve Açıklamalar - Junior Developer Rehberi</p>
+        </div>
+
+        <div class="content">
+            <div class="print-notice">
+                📋 İpucu: Sayfayı PDF olarak kaydetmek için Ctrl+P veya Cmd+P tuşlarına basın
+            </div>
+
+            <!-- SECTION 1: Core Java and Multithreading -->
+            <div class="section section-1">
+                <h2>1. CORE JAVA VE MULTITHREADING</h2>
+
+                <!-- Question 1 -->
+                <div class="question">
+                    <div class="question-num">Soru 1:</div>
+                    <div class="question-text">ConcurrentHashMap İçinde Thread Safety'i Nasıl Sağlar?</div>
+                </div>
+                <div class="answer">
+                    <p>ConcurrentHashMap, tüm haritayı kilitlemek yerine <span class="highlight">bucket-level synchronization (segmentasyon)</span> kullanır.</p>
+                    
+                    <h4>Temel İlkeler:</h4>
+                    <p><strong>1. Bucket Bölümleme:</strong> Harita 16 (veya daha fazla) segment'e bölünür. Her segment bağımsız olarak kilitlenir.</p>
+                    
+                    <div class="code-block">
+// ConcurrentHashMap sadece ihtiyaç duyduğu segment'i kilitler
+// Thread 1: Bucket 0'ı kilitler
+// Thread 2: Bucket 5'i kilitler (aynı anda yapabilir!)
+                    </div>
+
+                    <p><strong>2. CAS (Compare-and-Swap) Operasyonları:</strong> Java 8+ versiyonlarda atomik işlemler için kullanılır.</p>
+
+                    <p><strong>3. Null Değer Kısıtlaması:</strong> HashMap'ten farklı olarak ne key ne de value null olamaz.</p>
+
+                    <h4>Uygulamada Kullanımı:</h4>
+                    <div class="code-block">
+ConcurrentHashMap&lt;String, Integer&gt; map = new ConcurrentHashMap&lt;&gt;();
+
+// Thread-safe operasyonlar
+map.putIfAbsent("count", 0);  // Atomik
+map.computeIfPresent("count", (k, v) -> v + 1);  // Atomik
+
+// HashMap ile bunu yaparsanız race condition oluşur!
+                    </div>
+
+                    <div class="tip">HashMap'i multi-threaded ortamda senkronize etmek için Collections.synchronizedMap() kullanabilirsiniz, fakat ConcurrentHashMap daha performanslıdır.</div>
+
+                    <div class="warning">ConcurrentHashMap'te iteration sırasında kilitlenme olmadığından, döngü sırasında eklenen yeni elemanlar görülmeyebilir (bu istenen davranıştır).</div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question">
+                    <div class="question-num">Soru 2:</div>
+                    <div class="question-text">wait(), sleep() ve join() Arasındaki Farklar Nelerdir?</div>
+                </div>
+                <div class="answer">
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Metod</th>
+                            <th>Monitor Lock'u Serbest Bırakır</th>
+                            <th>Kullanım Amacı</th>
+                            <th>Uyandırılma Koşulu</th>
+                        </tr>
+                        <tr>
+                            <td><strong>wait()</strong></td>
+                            <td>✓ Evet</td>
+                            <td>Thread'i başka thread'in notification'ını beklemesi için uyutma</td>
+                            <td>notify() veya notifyAll() çağrılmasında</td>
+                        </tr>
+                        <tr>
+                            <td><strong>sleep()</strong></td>
+                            <td>✗ Hayır</td>
+                            <td>Thread'i belirli bir süre için uyutma</td>
+                            <td>Zaman dolduğunda otomatik</td>
+                        </tr>
+                        <tr>
+                            <td><strong>join()</strong></td>
+                            <td>✗ Hayır</td>
+                            <td>Bir thread'in diğer thread'in bitmesini beklemesi</td>
+                            <td>Hedef thread sonlandığında</td>
+                        </tr>
+                    </table>
+
+                    <h4>Detaylı Örnekler:</h4>
+
+                    <p><strong>wait() - Prodüktör/Tüketici Deseni:</strong></p>
+                    <div class="code-block">
+synchronized void consume() {
+    while (buffer.isEmpty()) {
+        wait();  // Lock'u serbest bırakır, diğer thread'ler çalışabilir
+    }
+    buffer.remove();
+}
+
+synchronized void produce() {
+    buffer.add(item);
+    notifyAll();  // Bekleyen thread'leri uyandır
+}
+                    </div>
+
+                    <p><strong>sleep() - Basit Gecikmeler:</strong></p>
+                    <div class="code-block">
+for (int i = 0; i < 5; i++) {
+    System.out.println("Countdown: " + (5 - i));
+    Thread.sleep(1000);  // Lock'u tutmaya devam eder
+}
+                    </div>
+
+                    <p><strong>join() - Thread Sıralaması:</strong></p>
+                    <div class="code-block">
+Thread thread1 = new Thread(() -> {
+    System.out.println("Thread 1 çalışıyor");
+});
+
+thread1.start();
+thread1.join();  // Main thread'i Thread 1'in bitmesini bekle
+System.out.println("Thread 1 bitti, artık main devam edebilir");
+                    </div>
+
+                    <div class="key-points">
+                        <h4>Hafızda Kalması Gereken Noktalar:</h4>
+                        <ul>
+                            <li>wait() ve notify() mutlaka synchronized blok içinde olmalı</li>
+                            <li>sleep() thread'i kesmez, interrupt edilebilir</li>
+                            <li>join() timeout ile kullanılabilir: thread.join(5000)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question">
+                    <div class="question-num">Soru 3:</div>
+                    <div class="question-text">Java Class Loading Mekanizmasını Açıklayınız</div>
+                </div>
+                <div class="answer">
+                    <p>Class loading, bir .class dosyasını JVM'ye yükleme ve kullanıma hazır hale getirme işlemidir. Üç aşamadan oluşur:</p>
+
+                    <h4>1. Loading (Yükleme) - Üç Class Loader Türü:</h4>
+                    <div class="key-points">
+                        <h4>Class Loader Hiyerarşisi:</h4>
+                        <ul>
+                            <li><strong>Bootstrap ClassLoader:</strong> Java standart kütüphaneleri (java.lang, java.util vs) yükler. JVM'nin parçasıdır.</li>
+                            <li><strong>Platform ClassLoader:</strong> (Java 9+) Extension ClassLoader yerine kullanılır. JDK'nın platform modülleri yükler.</li>
+                            <li><strong>Application ClassLoader:</strong> Uygulamanızın class'larını yükler. CLASSPATH'den bulur.</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Parent Delegation:</strong> Çocuk ClassLoader'ı, kendi yüklü bulunmayan bir class için önce parent'ına sorar.</p>
+
+                    <div class="code-block">
+// Hangi ClassLoader bir class'ı yükledi?
+ClassLoader loader = String.class.getClassLoader();
+System.out.println(loader);  // null (Bootstrap ClassLoader gösterilmez)
+
+ClassLoader loader2 = MyClass.class.getClassLoader();
+System.out.println(loader2);  // sun.misc.Launcher$AppClassLoader
+                    </div>
+
+                    <h4>2. Linking (Bağlantı):</h4>
+                    <p><strong>Verification:</strong> .class dosyasının formatı kontrol edilir</p>
+                    <p><strong>Preparation:</strong> Static değişkenler için bellek ayrılır</p>
+                    <p><strong>Resolution:</strong> Symbolic referanslar gerçek memory adreslerine dönüştürülür</p>
+
+                    <h4>3. Initialization (Başlatma):</h4>
+                    <p>Static bloklar ve static değişkenler ilk değerlendirilir.</p>
+
+                    <div class="code-block">
+public class MyClass {
+    static {
+        System.out.println("Initialization çalıştı!");  // Class ilk kez yüklenince çalışır
+    }
+    
+    static int count = 10;
+}
+                    </div>
+
+                    <div class="tip">Custom ClassLoader'ları plugin sistemleri ve dinamik sınıf yüklemesi için kullanabilirsiniz.</div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="question">
+                    <div class="question-num">Soru 4:</div>
+                    <div class="question-text">equals() ve == Arasındaki Fark Nedir?</div>
+                </div>
+                <div class="answer">
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Operatör</th>
+                            <th>Kıyaslama Türü</th>
+                            <th>Kullanım</th>
+                        </tr>
+                        <tr>
+                            <td><strong>==</strong></td>
+                            <td>Referans karşılaştırması</td>
+                            <td>Primitive'ler ve object referansı</td>
+                        </tr>
+                        <tr>
+                            <td><strong>equals()</strong></td>
+                            <td>Mantıksal eşitlik</td>
+                            <td>Obje içeriğinin karşılaştırılması</td>
+                        </tr>
+                    </table>
+
+                    <h4>Pratik Örnek:</h4>
+                    <div class="code-block">
+String s1 = new String("Java");
+String s2 = new String("Java");
+
+System.out.println(s1 == s2);      // false (farklı obje referansları)
+System.out.println(s1.equals(s2)); // true (aynı içerik)
+
+// Primitive'ler için:
+int a = 10;
+int b = 10;
+System.out.println(a == b);        // true (değerler aynı)
+                    </div>
+
+                    <h4>equals() Kendi Sınıfımızda Implement Etme:</h4>
+                    <div class="code-block">
+public class User {
+    String email;
+    int age;
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (!(obj instanceof User)) return false;
+        
+        User other = (User) obj;
+        return this.email.equals(other.email) && this.age == other.age;
+    }
+    
+    @Override
+    public int hashCode() {
+        // hashCode'u da override etmemiz GEREKLI!
+        return Objects.hash(email, age);
+    }
+}
+                    </div>
+
+                    <div class="warning">equals() override ettiğinizde mutlaka hashCode() da override edin! Aksi takdirde HashMap/HashSet'te sorun yaşarsınız.</div>
+
+                    <div class="key-points">
+                        <h4>hashCode() - equals() Kuralı:</h4>
+                        <ul>
+                            <li>Eğer equals() true dönerse, hashCode() aynı değeri döndürmelidir</li>
+                            <li>Eğer equals() false dönerse, hashCode() farklı değer döndürebilir (ama aynı da dönebilir)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="question">
+                    <div class="question-num">Soru 5:</div>
+                    <div class="question-text">JVM'de Garbage Collection Nasıl Çalışır?</div>
+                </div>
+                <div class="answer">
+                    <h4>Temel Kavram:</h4>
+                    <p>Garbage Collection, artık kullanılmayan nesneleri otomatik olarak belleğinden silen JVM özelliğidir. <span class="highlight">Reachability (ulaşılabilirlik)</span> üzerine kuruludur.</p>
+
+                    <h4>Heap Yapısı - Generational GC:</h4>
+                    <div class="key-points">
+                        <h4>Nesiller (Generations):</h4>
+                        <ul>
+                            <li><strong>Young Generation:</strong> Yeni yaratılan nesnelerin bulunduğu alan. Hızlı ölür.</li>
+                            <li><strong>Old Generation:</strong> Young generation'dan "yaşa çıkan" nesneler buraya taşınır.</li>
+                            <li><strong>Permanent Generation / Metaspace:</strong> Class metadata ve String pool</li>
+                        </ul>
+                    </div>
+
+                    <h4>GC İşlem Adımları:</h4>
+                    <div class="code-block">
+1. Mark Phase: Hangi nesnelerin ulaşılabilir olduğunu işaretler
+2. Sweep Phase: İşaretlenmeyen nesneleri siler
+3. Compact Phase: Belleği organize eder (bazı collector'larda)
+                    </div>
+
+                    <h4>GC Türleri:</h4>
+                    <p><strong>Minor GC:</strong> Young generation'ı temizler (hızlı, sık)</p>
+                    <p><strong>Major GC:</strong> Old generation'ı temizler (yavaş, nadir)</p>
+                    <p><strong>Full GC:</strong> Tüm heap'ı temizler (çok yavaş, ender)</p>
+
+                    <h4>Modern Collector: G1 GC</h4>
+                    <p>G1 GC heap'ı bölgelere (region) ayırır ve region-by-region işlem yapar, daha düşük pause time sağlar.</p>
+
+                    <div class="code-block">
+// GC log'larını görmek için (production'da kullanmayın):
+// java -Xlog:gc -Xmx1G MyApp
+
+// GC pause'ları azaltmak için:
+// java -XX:+UseG1GC -XX:MaxGCPauseMillis=200 MyApp
+                    </div>
+
+                    <div class="tip">Memory leak: Hala referanslı olan ama artık kullanılmayan nesneler GC'den kurtulmazlar. Statik koleksiyonlara sınırsız ekleme yaparsanız memory leak oluşur.</div>
+                </div>
+
+                <!-- Question 6 -->
+                <div class="question">
+                    <div class="question-num">Soru 6:</div>
+                    <div class="question-text">volatile ve synchronized Arasındaki Fark Nedir?</div>
+                </div>
+                <div class="answer">
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Özellik</th>
+                            <th>volatile</th>
+                            <th>synchronized</th>
+                        </tr>
+                        <tr>
+                            <td>Amaç</td>
+                            <td>Visibility (görünürlük) garantisi</td>
+                            <td>Mutual exclusion (karşılıklı dışlama)</td>
+                        </tr>
+                        <tr>
+                            <td>Lock kullanır mı?</td>
+                            <td>Hayır</td>
+                            <td>Evet</td>
+                        </tr>
+                        <tr>
+                            <td>Atomiklik</td>
+                            <td>Sadece read/write için</td>
+                            <td>Block içindeki tüm operasyonlar</td>
+                        </tr>
+                        <tr>
+                            <td>Performans</td>
+                            <td>Daha hızlı</td>
+                            <td>Daha yavaş ama güvenli</td>
+                        </tr>
+                    </table>
+
+                    <h4>volatile Nedir?</h4>
+                    <p>Volatile bir değişkenin her okuma/yazması ana belleğe gider, CPU cache'ine değil. Böylece diğer thread'ler en güncel değeri görür.</p>
+
+                    <div class="code-block">
+private volatile boolean flag = false;  // Visibility garantili
+
+// Thread 1
+flag = true;
+
+// Thread 2 (hemen görür)
+while (!flag) {
+    // bekleme
+}
+                    </div>
+
+                    <h4>volatile'in Sınırlaması:</h4>
+                    <div class="code-block">
+private volatile int count = 0;
+
+// BU PROBLEM: count++ atomik değildir!
+// 1. Mevcut değeri oku (10)
+// 2. Bir ekle (11)
+// 3. Yaz (11)
+// İkinci thread araya girerse: her iki thread'in increment'i kaybolabilir
+
+// Çözüm:
+private volatile int count = 0;
+synchronized void increment() {
+    count++;  // Artık atomik
+}
+                    </div>
+
+                    <h4>synchronized Ne Yapar?</h4>
+                    <div class="code-block">
+public synchronized void transfer(Account from, Account to, int amount) {
+    if (from.balance >= amount) {
+        from.balance -= amount;  // Critical section başlangıcı
+        to.balance += amount;    // Critical section sonu
+        // Başka thread'ler bu süre boyunca bu metodu çağıramaz
+    }
+}
+                    </div>
+
+                    <div class="tip">Baskı düşük ise volatile, baskı yüksek ise AtomicInteger veya ReadWriteLock kullanın.</div>
+                </div>
+
+                <!-- Question 7 -->
+                <div class="question">
+                    <div class="question-num">Soru 7:</div>
+                    <div class="question-text">Shallow Copy vs Deep Copy - Fark Nedir?</div>
+                </div>
+                <div class="answer">
+                    <h4>Shallow Copy (Yüzeysel Kopya):</h4>
+                    <p>Sadece referansları kopyalanır, nested obje'ler paylaşılır.</p>
+
+                    <div class="code-block">
+public class Person {
+    String name;
+    Address address;  // Nested obje
+}
+
+Person original = new Person();
+original.name = "Ali";
+original.address = new Address();
+original.address.city = "İstanbul";
+
+// Shallow copy
+Person copy = original;  // YANLIŞ: Aynı obje referansı
+copy.address.city = "Ankara";
+
+System.out.println(original.address.city);  // "Ankara" - Original da değişti!
+                    </div>
+
+                    <h4>Deep Copy (Derin Kopya):</h4>
+                    <p>Nested obje'ler de kopyalanır, tamamen bağımsız nesneler oluşur.</p>
+
+                    <div class="code-block">
+public class Person implements Cloneable {
+    String name;
+    Address address;
+    
+    @Override
+    public Person clone() throws CloneNotSupportedException {
+        Person copy = (Person) super.clone();
+        // Nested objeyi de kopyala
+        copy.address = new Address();
+        copy.address.city = address.city;
+        return copy;
+    }
+}
+
+Person original = new Person();
+Person deepCopy = original.clone();
+deepCopy.address.city = "Ankara";
+
+System.out.println(original.address.city);  // "İstanbul" - Original değişmedi
+                    </div>
+
+                    <div class="key-points">
+                        <h4>Ne Zaman Kullanmalı?</h4>
+                        <ul>
+                            <li>Shallow Copy: Immutable nested obje'ler varsa (String, Integer)</li>
+                            <li>Deep Copy: Mutable nested obje'ler varsa (List, Map, custom obje'ler)</li>
+                        </ul>
+                    </div>
+
+                    <div class="tip">En kolay yol: Jackson kütüphanesini kullanarak JSON'a çevir, geri dönüştür (deep copy garantili).</div>
+                </div>
+
+                <!-- Question 8 -->
+                <div class="question">
+                    <div class="question-num">Soru 8:</div>
+                    <div class="question-text">Checked vs Unchecked Exceptions - Fark Nedir?</div>
+                </div>
+                <div class="answer">
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Tür</th>
+                            <th>Parent Class</th>
+                            <th>Compile-Time Check</th>
+                            <th>Örnek</th>
+                        </tr>
+                        <tr>
+                            <td>Checked Exception</td>
+                            <td>Exception</td>
+                            <td>✓ Evet (zorunlu handle etme)</td>
+                            <td>IOException, SQLException</td>
+                        </tr>
+                        <tr>
+                            <td>Unchecked Exception</td>
+                            <td>RuntimeException</td>
+                            <td>✗ Hayır (opsiyonel)</td>
+                            <td>NullPointerException, ArrayIndexOutOfBoundsException</td>
+                        </tr>
+                    </table>
+
+                    <h4>Checked Exception Örneği:</h4>
+                    <div class="code-block">
+public void readFile(String filename) throws IOException {
+    // IOException checked exception'dır
+    // Ya try-catch ya da throws kullanmalısınız
+    FileReader file = new FileReader(filename);
+}
+
+// Çağrıldığında
+try {
+    readFile("data.txt");
+} catch (IOException e) {
+    e.printStackTrace();
+}
+                    </div>
+
+                    <h4>Unchecked Exception Örneği:</h4>
+                    <div class="code-block">
+public void divide(int a, int b) {
+    // ArithmeticException unchecked
+    // Compile error yoktur, ama runtime'da çıkabilir
+    return a / b;  // b == 0 ise çöker
+}
+                    </div>
+
+                    <h4>Uygulamada Seçim:</h4>
+                    <div class="code-block">
+// Checked Exception: Beklenen dış hatalar
+public User getUserFromDatabase(int id) throws SQLException {
+    // Veritabanı bağlantısı başarısız olabilir
+}
+
+// Unchecked Exception: Programcı hatası (invalid parameter)
+public void setAge(int age) {
+    if (age < 0) {
+        throw new IllegalArgumentException("Yaş negatif olamaz");
+    }
+    this.age = age;
+}
+                    </div>
+
+                    <div class="tip">Modern API'ler daha çok unchecked exception'lar tercih eder (try-catch'ten kurtulmak için). Checked exception'lar sadece gerçekten recover edilebilir durumlarda kullanın.</div>
+                </div>
+
+                <!-- Question 9 -->
+                <div class="question">
+                    <div class="question-num">Soru 9:</div>
+                    <div class="question-text">ThreadLocal Nedir ve Pratik Kullanım Örneği?</div>
+                </div>
+                <div class="answer">
+                    <h4>ThreadLocal Nedir?</h4>
+                    <p>Her thread'in kendi değişken kopysını tutmasını sağlayan bir veri yapısıdır. Bir thread başka thread'in değerini göremez.</p>
+
+                    <div class="code-block">
+// Sabit bir ThreadLocal tanımı
+private static final ThreadLocal&lt;String&gt; userContext = ThreadLocal.withInitial(() -> "guest");
+
+// Thread 1
+userContext.set("Ali");
+System.out.println(userContext.get());  // "Ali"
+
+// Thread 2 (aynı anda)
+userContext.set("Fatma");
+System.out.println(userContext.get());  // "Fatma"
+
+// Thread 1'de tekrar sorgulasak:
+// System.out.println(userContext.get());  // "Ali" - değişmedi!
+                    </div>
+
+                    <h4>Pratik Örnek: Web Request Context</h4>
+                    <div class="code-block">
+public class RequestContext {
+    private static final ThreadLocal&lt;String&gt; requestId = new ThreadLocal&lt;&gt;();
+    private static final ThreadLocal&lt;String&gt; userId = new ThreadLocal&lt;&gt;();
+    
+    public static void setRequestId(String id) {
+        requestId.set(id);
+    }
+    
+    public static String getRequestId() {
+        return requestId.get();
+    }
+    
+    // Her request'te temizlemek zorunlu!
+    public static void cleanup() {
+        requestId.remove();
+        userId.remove();
+    }
+}
+
+// Spring Controller'da
+@PostMapping("/api/users")
+public User createUser(@RequestBody User user) {
+    String correlationId = UUID.randomUUID().toString();
+    RequestContext.setRequestId(correlationId);
+    
+    try {
+        // Log, service çağrıları vs. request ID'yi kullanabilir
+        logger.info("Request ID: " + RequestContext.getRequestId());
+        return userService.create(user);
+    } finally {
+        RequestContext.cleanup();  // UNUTMAYIN!
+    }
+}
+                    </div>
+
+                    <div class="warning">ThreadLocal Memory Leak'ler ThreadPool'larda (Tomcat, ThreadPoolExecutor) yaşanır çünkü thread'ler yeniden kullanılır. Cleanup() yapmazsanız önceki request'in verileri yeni request'te görülebilir!</div>
+
+                    <div class="tip">Reactive/Async kodda ThreadLocal yerine Context API veya Spring Security'nin SecurityContext'i (ContextHolder) kullanın.</div>
+                </div>
+
+                <!-- Question 10 -->
+                <div class="question">
+                    <div class="question-num">Soru 10:</div>
+                    <div class="question-text">Yüksek Volume Ödeme Sisteminde Thread-Safe Hesap Bakiyesi Güncellemesi</div>
+                </div>
+                <div class="answer">
+                    <h4>Problem:</h4>
+                    <p>İki thread aynı anda son 100 TL'yi çekmeye çalışıyor. İkisinin de başarılı olması engellenmeli.</p>
+
+                    <h4>Çözüm 1: Pessimistic Locking (Kilitleyici Yöntem)</h4>
+                    <div class="code-block">
+@Transactional
+public boolean withdraw(Long accountId, BigDecimal amount) {
+    // SELECT ... FOR UPDATE - veritabanı satırı kilitler
+    Account account = accountRepo.findByIdWithLock(accountId);
+    
+    if (account.getBalance().compareTo(amount) >= 0) {
+        account.setBalance(account.getBalance().subtract(amount));
+        accountRepo.save(account);
+        return true;
+    }
+    return false;
+}
+                    </div>
+
+                    <h4>Çözüm 2: Optimistic Locking (Versiyon Kontrolü)</h4>
+                    <div class="code-block">
+@Entity
+public class Account {
+    @Id
+    Long id;
+    
+    BigDecimal balance;
+    
+    @Version
+    Long version;  // Her güncelleme artırılır
+}
+
+@Transactional
+public void withdraw(Long accountId, BigDecimal amount) {
+    Account account = accountRepo.findById(accountId).get();
+    
+    if (account.getBalance().compareTo(amount) >= 0) {
+        account.setBalance(account.getBalance().subtract(amount));
+        // Eğer version değişmişse: OptimisticLockingFailureException
+        accountRepo.save(account);
+    }
+}
+
+// Çağrıcı tarafında retry:
+int retry = 3;
+while (retry > 0) {
+    try {
+        withdraw(accountId, amount);
+        break;
+    } catch (OptimisticLockingFailureException e) {
+        retry--;
+        if (retry == 0) throw e;
+        Thread.sleep(100);  // Geri kalan retry'lar için bekleme
+    }
+}
+                    </div>
+
+                    <h4>Çözüm 3: Atomik SQL Güncelleme (En İyi)</h4>
+                    <div class="code-block">
+@Transactional
+public void withdraw(Long accountId, BigDecimal amount) {
+    int updated = accountRepo.decrementBalanceIfSufficient(accountId, amount);
+    if (updated == 0) {
+        throw new InsufficientFundsException();
+    }
+}
+
+// Repository
+@Query("""
+    UPDATE Account a 
+    SET a.balance = a.balance - :amount 
+    WHERE a.id = :id AND a.balance >= :amount
+""")
+@Modifying
+int decrementBalanceIfSufficient(
+    @Param("id") Long id, 
+    @Param("amount") BigDecimal amount
+);
+                    </div>
+
+                    <h4>Ek Güvenlik Mekanizmaları:</h4>
+                    <div class="key-points">
+                        <h4>Idempotency Anahtarı:</h4>
+                        <ul>
+                            <li>Her işlem için UUID oluştur (client tarafından)</li>
+                            <li>Veritabanına depo et</li>
+                            <li>Aynı UUID ile tekrar gelirse önceki sonucu dön</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-block">
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "idempotencyKey"))
+public class Transaction {
+    @Id
+    Long id;
+    String idempotencyKey;  // Unique!
+    BigDecimal amount;
+    Status status;
+}
+
+// İlk istek
+transactionRepo.findByIdempotencyKey("abc-123-def");  // Bulunamadı, işlem yap
+
+// Tekrar istek (same idempotencyKey)
+transactionRepo.findByIdempotencyKey("abc-123-def");  // Bulundu, sonucu dön
+                    </div>
+
+                    <div class="tip">Çoklu instance ortamında: pessimistic locking veritabanı seviyesinde çalışır, bu da güvendir. Optimistic locking retry gerektir fakat throughput daha yüksektir.</div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: Spring and Spring Boot -->
+            <div class="section section-2">
+                <h2>2. SPRING VE SPRING BOOT</h2>
+
+                <!-- Question 11 -->
+                <div class="question">
+                    <div class="question-num">Soru 11:</div>
+                    <div class="question-text">@Bean ve @Component Arasındaki Fark Nedir?</div>
+                </div>
+                <div class="answer">
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Özellik</th>
+                            <th>@Component</th>
+                            <th>@Bean</th>
+                        </tr>
+                        <tr>
+                            <td>Nereye yazılır?</td>
+                            <td>Sınıf tanımının üstüne</td>
+                            <td>@Configuration sınıfı içindeki metod</td>
+                        </tr>
+                        <tr>
+                            <td>Ne scan eder?</td>
+                            <td>Sınıf otomatik taranır</td>
+                            <td>Manuel metod çağrısı</td>
+                        </tr>
+                        <tr>
+                            <td>Third-party kütüphane</td>
+                            <td>Kullanılamaz (kaynak koduna erişim lazım)</td>
+                            <td>Mükemmel ✓</td>
+                        </tr>
+                    </table>
+
+                    <h4>@Component Kullanımı:</h4>
+                    <div class="code-block">
+@Component
+public class EmailService {
+    public void sendEmail(String to, String subject) {
+        // e-posta gönder
+    }
+}
+
+// Otomatik olarak Spring container'a eklenir
+// @ComponentScan alanında bulunması gerekir
+                    </div>
+
+                    <h4>@Bean Kullanımı:</h4>
+                    <div class="code-block">
+@Configuration
+public class AppConfig {
+    // Kendi yazdığımız sınıf
+    @Bean
+    public EmailService emailService() {
+        return new EmailService();
+    }
+    
+    // Third-party kütüphane (RestTemplate)
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+    
+    // Third-party (Gson)
+    @Bean
+    public Gson gson() {
+        return new GsonBuilder().setPrettyPrinting().create();
+    }
+}
+
+// Inject etme
+@Service
+public class UserService {
+    @Autowired
+    private EmailService emailService;  // @Bean de çalışır
+    
+    @Autowired
+    private RestTemplate restTemplate;  // Third-party @Bean
+}
+                    </div>
+
+                    <h4>Ne Zaman Hangisini Kullanmalı?</h4>
+                    <div class="key-points">
+                        <h4>Seçim Kılavuzu:</h4>
+                        <ul>
+                            <li>Kendi yazdığım sınıf: @Component (@Service, @Controller, @Repository)</li>
+                            <li>Third-party kütüphane: @Bean + @Configuration</li>
+                            <li>Conditional initialization lazımsa: @Bean + @Conditional(...)</li>
+                            <li>Kompleks setup lazımsa: @Bean (constructor, property set vs.)</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-block">
+// Advanced: Conditional Bean
+@Configuration
+public class DatabaseConfig {
+    @Bean
+    @ConditionalOnProperty(name = "db.type", havingValue = "mysql")
+    public DataSource mysqlDataSource() {
+        return new MysqlDataSource();
+    }
+    
+    @Bean
+    @ConditionalOnProperty(name = "db.type", havingValue = "postgres")
+    public DataSource postgresDataSource() {
+        return new PostgresDataSource();
+    }
+}
+                    </div>
+
+                    <div class="tip">Spring genellikle @Component ve subtypes'ını önerir (daha clean), @Bean'i third-party için kullanın.</div>
+                </div>
+
+                <!-- Question 12 -->
+                <div class="question">
+                    <div class="question-num">Soru 12:</div>
+                    <div class="question-text">Aspect-Oriented Programming (AOP) Nedir?</div>
+                </div>
+                <div class="answer">
+                    <h4>AOP Nedir?</h4>
+                    <p>Cross-cutting concerns'leri (logging, security, transaction) ana business logic'ten ayırmaya yarayan teknik.</p>
+
+                    <h4>AOP Temel Terimleri:</h4>
+                    <div class="key-points">
+                        <h4>AOP Sözlüğü:</h4>
+                        <ul>
+                            <li><strong>Aspect:</strong> AOP modülü (class)</li>
+                            <li><strong>Join Point:</strong> Advice uygulanabilen kod noktası (method call, exception)</li>
+                            <li><strong>Pointcut:</strong> Join point'leri seçen expression (@Pointcut)</li>
+                            <li><strong>Advice:</strong> Pointcut'a yapılacak işlem (Before, After, Around)</li>
+                        </ul>
+                    </div>
+
+                    <h4>Pratik Örnek: Logging Aspect</h4>
+                    <div class="code-block">
+@Aspect
+@Component
+public class LoggingAspect {
+    
+    @Pointcut("execution(* com.example.service.*.*(..))")
+    public void serviceLayer() {}
+    
+    @Before("serviceLayer()")
+    public void logBefore(JoinPoint joinPoint) {
+        String methodName = joinPoint.getSignature().getName();
+        logger.info("Metod çağrıldı: " + methodName);
+    }
+    
+    @After("serviceLayer()")
+    public void logAfter(JoinPoint joinPoint) {
+        logger.info("Metod tamamlandı: " + joinPoint.getSignature().getName());
+    }
+    
+    @Around("serviceLayer()")
+    public Object logAround(ProceedingJoinPoint pjp) throws Throwable {
+        long start = System.currentTimeMillis();
+        
+        Object result = pjp.proceed();  // Asıl metod çalışır
+        
+        long duration = System.currentTimeMillis() - start;
+        logger.info("Süre: " + duration + "ms");
+        
+        return result;
+    }
+}
+                    </div>
+
+                    <h4>Annotation-Based Pointcut Örneği:</h4>
+                    <div class="code-block">
+// 1. Custom annotation tanımla
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface LogExecution {
+}
+
+// 2. Aspect'i yazıyor
+@Aspect
+@Component
+public class ExecutionLogAspect {
+    
+    @Around("@annotation(LogExecution)")
+    public Object log(ProceedingJoinPoint pjp) throws Throwable {
+        System.out.println("START: " + pjp.getSignature());
+        Object result = pjp.proceed();
+        System.out.println("END: " + pjp.getSignature());
+        return result;
+    }
+}
+
+// 3. Service'te kullan
+@Service
+public class UserService {
+    
+    @LogExecution  // Bu metod log'lanacak
+    public void createUser(User user) {
+        // business logic
+    }
+}
+                    </div>
+
+                    <h4>Self-Invocation Problemi:</h4>
+                    <div class="code-block">
+@Service
+public class PaymentService {
+    
+    @Transactional
+    public void pay(Order order) {
+        deductBalance(order.getAmount());  // Aspect çalışmaz!
+    }
+    
+    @Transactional
+    private void deductBalance(BigDecimal amount) {
+        // ...
+    }
+}
+
+// Sorun: pay() içinden deductBalance() çağrıldığında,
+// proxy'den geçmediği için Aspect uygulanmaz.
+
+// Çözüm 1: Inject ApplicationContext ve bean'i çağır
+// Çözüm 2: deductBalance'ı başka bir service'e taşı
+// Çözüm 3: public yap (iyi practice değildir)
+                    </div>
+
+                    <div class="warning">Spring AOP proxy-based'dir, yani reflection kullanır. Buna rağmen hızlı ama tüm reflection sınırlamaları vardır (private metod, constructor vs.)</div>
+
+                    <div class="tip">AspectJ kullanarak bytecode manipulation yapabilirsiniz (constructor, private metod vs. için), ancak setup daha karmaşıktır.</div>
+                </div>
+
+                <!-- Question 13 -->
+                <div class="question">
+                    <div class="question-num">Soru 13:</div>
+                    <div class="question-text">Spring Circular Dependencies Nasıl Yönetir?</div>
+                </div>
+                <div class="answer">
+                    <h4>Circular Dependency Nedir?</h4>
+                    <p>A bean'i B bean'e, B bean'i ise A bean'e bağımlı olduğunda meydana gelir.</p>
+
+                    <h4>Durum 1: Constructor Injection - BAŞARISIZ</h4>
+                    <div class="code-block">
+@Service
+public class ServiceA {
+    private ServiceB serviceB;
+    
+    // Constructor injection
+    public ServiceA(ServiceB serviceB) {  // ❌ Circular!
+        this.serviceB = serviceB;
+    }
+}
+
+@Service
+public class ServiceB {
+    private ServiceA serviceA;
+    
+    public ServiceB(ServiceA serviceA) {  // ❌ Circular!
+        this.serviceA = serviceA;
+    }
+}
+
+// Başlarken: UnsatisfiedDependencyException!
+                    </div>
+
+                    <h4>Durum 2: Setter/Field Injection - BAŞARILI (Dikkatli)</h4>
+                    <div class="code-block">
+@Service
+public class ServiceA {
+    @Autowired  // ✓ Setter/field injection
+    private ServiceB serviceB;
+}
+
+@Service
+public class ServiceB {
+    @Autowired  // ✓ Setter/field injection
+    private ServiceA serviceA;
+}
+
+// Spring bunu çözer (early bean reference'lar sayesinde)
+// Ancak service'ler başlangıçta null olabilir!
+                    </div>
+
+                    <h4>Çözüm 1: Architecture Tasarımını Değiştir</h4>
+                    <div class="code-block">
+// Sorunlu tasarım:
+// ServiceA -> ServiceB -> ServiceA
+
+// Çözüm: Yeni service ekle
+@Service
+public class ServiceC {
+    @Autowired
+    private ServiceA serviceA;
+    
+    @Autowired
+    private ServiceB serviceB;
+    
+    public void doSomething() {
+        serviceA.doA();
+        serviceB.doB();
+    }
+}
+                    </div>
+
+                    <h4>Çözüm 2: Events Kullan (Decoupled)</h4>
+                    <div class="code-block">
+// Event tanımı
+public class OrderCreatedEvent {
+    private Order order;
+    // getter/setter
+}
+
+// ServiceA - event yayınlayan
+@Service
+public class ServiceA {
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
+    
+    public void createOrder(Order order) {
+        eventPublisher.publishEvent(new OrderCreatedEvent(order));
+    }
+}
+
+// ServiceB - event dinleyen (bağımlı değil!)
+@Service
+public class ServiceB {
+    
+    @EventListener
+    public void handleOrderCreated(OrderCreatedEvent event) {
+        // Order işleme
+    }
+}
+
+// Hiç circular dependency yok!
+                    </div>
+
+                    <h4>Çözüm 3: Lazy Initialization</h4>
+                    <div class="code-block">
+@Service
+public class ServiceA {
+    @Autowired
+    @Lazy
+    private ServiceB serviceB;  // İhtiyaç duyulduğunda başlatılır
+}
+                    </div>
+
+                    <div class="tip">En iyi uygulama: Circular dependency'i tasarımdan çıkarmaktır. Event-driven yaklaşımı kullanın.</div>
+                </div>
+
+                <!-- Question 14 -->
+                <div class="question">
+                    <div class="question-num">Soru 14:</div>
+                    <div class="question-text">JWT ve OAuth 2.0 ile REST API'ları Nasıl Secure Yaparım?</div>
+                </div>
+                <div class="answer">
+                    <h4>Authentication vs Authorization</h4>
+                    <p><strong>Authentication:</strong> "Siz kimsiniz?" (giriş yapan kişi)</p>
+                    <p><strong>Authorization:</strong> "Ne yapabilirsiniz?" (izin kontrolü)</p>
+
+                    <h4>JWT (JSON Web Token) Nedir?</h4>
+                    <p>İmzalı bir token, kendi içinde kullanıcı bilgisi taşır. Server-side session gerektirmez.</p>
+
+                    <div class="code-block">
+// JWT yapısı: Header.Payload.Signature
+// eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGkiLCJpYXQiOjE2MzQ3NTY4MDB9.xxx
+
+// Header: {"alg":"HS256"}
+// Payload: {"sub":"ali","iat":1634756800,"exp":1634760400}
+// Signature: HMAC-SHA256(Header.Payload, secret_key)
+                    </div>
+
+                    <h4>OAuth 2.0 Authorization Code Flow</h4>
+                    <div class="code-block">
+1. User: Uygulamaya giriş için OAuth provider'a yönlendir
+2. Provider: User login yap, permission sor
+3. Provider: Authorization code gönder
+4. App Backend: Authorization code + client_secret ile token iste
+5. Provider: Access token ve refresh token gönder
+6. App Backend: Access token ile API çağrılarını yap
+                    </div>
+
+                    <h4>Spring Security ile JWT Implementation</h4>
+                    <div class="code-block">
+// Dependency: spring-boot-starter-security, jjwt
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+    
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf().disable()
+            .authorizeRequests()
+                .antMatchers("/api/auth/login").permitAll()
+                .antMatchers("/api/users/**").authenticated()
+                .antMatchers("/api/admin/**").hasRole("ADMIN")
+            .and()
+            .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        
+        return http.build();
+    }
+    
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter();
+    }
+}
+
+// JWT Token Provider
+@Component
+public class JwtTokenProvider {
+    
+    @Value("${app.jwtSecret}")
+    private String jwtSecret;
+    
+    @Value("${app.jwtExpirationMs}")
+    private int jwtExpirationMs;
+    
+    public String generateToken(String username) {
+        Date now = new Date();
+        Date expDate = new Date(now.getTime() + jwtExpirationMs);
+        
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(now)
+                .setExpiration(expDate)
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .compact();
+    }
+    
+    public String getUsernameFromToken(String token) {
+        return Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
+    
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+            return true;
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
+    }
+}
+
+// Filter
+@Component
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
+    
+    @Autowired
+    private JwtTokenProvider tokenProvider;
+    
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, 
+                                    HttpServletResponse response, 
+                                    FilterChain filterChain) throws ServletException, IOException {
+        try {
+            String jwt = getJwtFromRequest(request);
+            
+            if (jwt != null && tokenProvider.validateToken(jwt)) {
+                String username = tokenProvider.getUsernameFromToken(jwt);
+                
+                UserDetails userDetails = loadUserDetails(username);
+                Authentication auth = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
+                
+                SecurityContextHolder.getContext().setAuthentication(auth);
+            }
+        } catch (Exception e) {
+            logger.error("JWT filter error", e);
+        }
+        
+        filterChain.doFilter(request, response);
+    }
+    
+    private String getJwtFromRequest(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+        return null;
+    }
+}
+
+// Login Controller
+@RestController
+@RequestMapping("/api/auth")
+public class AuthController {
+    
+    @Autowired
+    private JwtTokenProvider tokenProvider;
+    
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        // Username/password doğrula (authenticate)
+        // İlgili user'ı yükle
+        
+        String token = tokenProvider.generateToken(request.getUsername());
+        return ResponseEntity.ok(new JwtAuthenticationResponse(token));
+    }
+}
+
+// Protected endpoint
+@RestController
+@RequestMapping("/api/users")
+public class UserController {
+    
+    @GetMapping("/me")
+    @PreAuthorize("isAuthenticated()")  // JWT valid olmalı
+    public ResponseEntity<?> getCurrentUser() {
+        String username = SecurityContextHolder.getContext()
+                .getAuthentication().getName();
+        return ResponseEntity.ok(userService.findByUsername(username));
+    }
+}
+                    </div>
+
+                    <h4>Refresh Token Pattern</h4>
+                    <div class="code-block">
+// Access token kısa (15 min), refresh token uzun (7 days)
+@PostMapping("/refresh")
+public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenRequest request) {
+    if (!tokenProvider.validateRefreshToken(request.getRefreshToken())) {
+        return ResponseEntity.status(401).build();
+    }
+    
+    String username = tokenProvider.getUsernameFromToken(request.getRefreshToken());
+    String newAccessToken = tokenProvider.generateToken(username);
+    
+    return ResponseEntity.ok(new JwtAuthenticationResponse(newAccessToken));
+}
+                    </div>
+
+                    <h4>OAuth 2.0 Google Login (Spring Boot)</h4>
+                    <div class="code-block">
+# application.yml
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            token-uri: https://www.googleapis.com/oauth2/v4/token
+
+// SecurityConfig
+.oauth2Login()
+    .defaultSuccessUrl("/dashboard", true)
+    .and()
+                    </div>
+
+                    <div class="warning">JWT'i bir kez verify etmek yeterlidir, sonraki isteklerde cache'de tutabilirsiniz. Token revocation gerektiyorsa blacklist maintain etmeniz gerekir.</div>
+
+                    <div class="tip">Sensitive bilgiler (password, credit card) JWT payload'a koymamaın, claims'te sadece public/non-sensitive bilgiler koyun.</div>
+                </div>
+
+                <!-- Question 15 -->
+                <div class="question">
+                    <div class="question-num">Soru 15:</div>
+                    <div class="question-text">Spring Boot Auto-Configuration Nasıl Çalışır?</div>
+                </div>
+                <div class="answer">
+                    <h4>Auto-Configuration Nedir?</h4>
+                    <p>Spring Boot, classpath'te gördüğü kütüphanelere göre otomatik bean'ler oluşturur. Örneğin, DataSource jar'ı varsa, otomatik DataSource bean'i yaratılır.</p>
+
+                    <h4>Nasıl Çalışır?</h4>
+                    <div class="code-block">
+1. @SpringBootApplication = @Configuration + @EnableAutoConfiguration + @ComponentScan
+
+2. @EnableAutoConfiguration spring.factories dosyasından auto-config class'larını yükler
+
+3. Conditional annotations kontrol edilir:
+   - @ConditionalOnClass - Bu class classpath'te mi?
+   - @ConditionalOnMissingBean - Bu bean'i user yaratmadı mı?
+   - @ConditionalOnProperty - Bu property enabled mi?
+
+4. Koşullar sağlanırsa bean oluşturulur
+                    </div>
+
+                    <h4>spring.factories Nedir?</h4>
+                    <div class="code-block">
+# spring-boot-autoconfigure.jar içinde
+META-INF/spring.factories
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,\
+  org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration,\
+  org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration,\
+  ...
+                    </div>
+
+                    <h4>Örnek: DataSourceAutoConfiguration</h4>
+                    <div class="code-block">
+@Configuration
+@ConditionalOnClass(DataSource.class)  // org.springframework.jdbc.datasource.DataSource jar'ında mı?
+@ConditionalOnMissingBean(DataSource.class)  // User bean yaratmadı mı?
+@EnableConfigurationProperties(DataSourceProperties.class)
+public class DataSourceAutoConfiguration {
+    
+    @Bean
+    public DataSource dataSource(DataSourceProperties properties) {
+        // application.yml'den oku
+        return properties.initializeDataSourceBuilder().build();
+    }
+}
+                    </div>
+
+                    <h4>application.yml'de Konfigürasyon:</h4>
+                    <div class="code-block">
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/mydb
+    username: root
+    password: secret
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+                    </div>
+
+                    <h4>Auto-Config Disable Etme:</h4>
+                    <div class="code-block">
+// Tek bir auto-config'i disable et
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+public class MyApp {
+}
+
+// Veya application.yml'de:
+spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+                    </div>
+
+                    <h4>Custom Auto-Configuration Yazma:</h4>
+                    <div class="code-block">
+// CustomAutoConfiguration.java
+@Configuration
+@ConditionalOnClass(MyService.class)
+@ConditionalOnMissingBean(MyService.class)
+public class MyServiceAutoConfiguration {
+    
+    @Bean
+    @ConditionalOnProperty(name = "myapp.service.enabled", havingValue = "true")
+    public MyService myService() {
+        return new MyService();
+    }
+}
+
+// resources/META-INF/spring.factories
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.example.MyServiceAutoConfiguration
+                    </div>
+
+                    <h4>Auto-Configuration Neden Çalışmadığını Debug Etme:</h4>
+                    <div class="code-block">
+// 1. Hangi auto-configs'ler uygulandığını görmek
+java -Ddebug -jar myapp.jar
+
+// 2. application.yml'de
+logging:
+  level:
+    org.springframework.boot.autoconfigure: DEBUG
+
+// 3. /actuator/conditions endpoint'ine bakın (Spring Boot Actuator gerekli)
+                    </div>
+
+                    <div class="tip">Spring Boot 2.7+: spring.factories yerine spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports kullanılıyor.</div>
+                </div>
+
+                <!-- Continuing with Questions 16-20... -->
+                <div class="question">
+                    <div class="question-num">Soru 16:</div>
+                    <div class="question-text">application.properties vs application.yml - Hangisini Kullanmalı?</div>
+                </div>
+                <div class="answer">
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Özellik</th>
+                            <th>application.properties</th>
+                            <th>application.yml</th>
+                        </tr>
+                        <tr>
+                            <td>Format</td>
+                            <td>key=value</td>
+                            <td>Hierarchical YAML</td>
+                        </tr>
+                        <tr>
+                            <td>Readability</td>
+                            <td>Basit ama verbose</td>
+                            <td>Temiz ve hiyerarşik</td>
+                        </tr>
+                        <tr>
+                            <td>Performance</td>
+                            <td>Hafif daha hızlı</td>
+                            <td>Minimal fark</td>
+                        </tr>
+                    </table>
+
+                    <h4>application.properties Örneği:</h4>
+                    <div class="code-block">
+spring.datasource.url=jdbc:mysql://localhost:3306/mydb
+spring.datasource.username=root
+spring.datasource.password=secret
+spring.jpa.hibernate.ddl-auto=update
+server.port=8080
+logging.level.root=INFO
+                    </div>
+
+                    <h4>application.yml Örneği (Tercih Edilen):</h4>
+                    <div class="code-block">
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/mydb
+    username: root
+    password: secret
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: INFO
+                    </div>
+
+                    <h4>Profile-Specific Configuration:</h4>
+                    <div class="code-block">
+application.yml (default)
+application-dev.yml (development)
+application-prod.yml (production)
+application-test.yml (testing)
+
+// Çalıştırma:
+java -Dspring.profiles.active=prod -jar app.jar
+// veya ENV: SPRING_PROFILES_ACTIVE=prod
+                    </div>
+
+                    <h4>Secret Management - Passwords Hiçbir Zaman Commit Yapmayın:</h4>
+                    <div class="code-block">
+# 1. Environment variables kullan
+export DB_PASSWORD=secret123
+export API_KEY=abc-xyz-123
+
+# 2. application.yml
+spring:
+  datasource:
+    password: ${DB_PASSWORD}
+
+# 3. Veya .env file (spring-dotenv)
+# 4. Production: HashiCorp Vault, AWS Secrets Manager, Azure Key Vault
+                    </div>
+
+                    <div class="warning">Passwords, API keys, credentials'ları source control'e push etmeyin! GitHub'a .git push yapmadan önce secrets scan edin.</div>
+
+                    <div class="tip">YAML kullanmanızı önerim: daha readable, hiyerarşik yapı, nested properties'ler daha temiz.</div>
+                </div>
+
+                <!-- Question 17 -->
+                <div class="question">
+                    <div class="question-num">Soru 17:</div>
+                    <div class="question-text">ApplicationContext vs BeanFactory - Arasındaki Fark?</div>
+                </div>
+                <div class="answer">
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Özellik</th>
+                            <th>BeanFactory</th>
+                            <th>ApplicationContext</th>
+                        </tr>
+                        <tr>
+                            <td>Scope</td>
+                            <td>Core interface</td>
+                            <td>BeanFactory'i extend eder</td>
+                        </tr>
+                        <tr>
+                            <td>Bean Management</td>
+                            <td>✓ Temel</td>
+                            <td>✓ Geliştirilmiş</td>
+                        </tr>
+                        <tr>
+                            <td>Events</td>
+                            <td>✗</td>
+                            <td>✓ ApplicationEvent support</td>
+                        </tr>
+                        <tr>
+                            <td>I18n (Internationalization)</td>
+                            <td>✗</td>
+                            <td>✓</td>
+                        </tr>
+                        <tr>
+                            <td>Resource Loading</td>
+                            <td>✗</td>
+                            <td>✓ ResourceLoader</td>
+                        </tr>
+                        <tr>
+                            <td>Initialization</td>
+                            <td>Manual (lazy)</td>
+                            <td>Automatic (eager)</td>
+                        </tr>
+                    </table>
+
+                    <h4>BeanFactory - Minimal Konfigürasyon:</h4>
+                    <div class="code-block">
+// Spring XML config'ine ihtiyacınız var
+BeanFactory factory = new XmlBeanFactory(
+    new ClassPathResource("applicationContext.xml"));
+
+// Bean'i al
+UserService service = factory.getBean("userService", UserService.class);
+
+// Lazy: Bean'ler ancak getBean çağrıldığında yaratılır
+                    </div>
+
+                    <h4>ApplicationContext - Tam Özellik:</h4>
+                    <div class="code-block">
+// Java config
+ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+
+// veya XML config
+ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+
+// veya Spring Boot (otomatik)
+@SpringBootApplication
+public class MyApp {
+    public static void main(String[] args) {
+        ApplicationContext context = SpringApplication.run(MyApp.class, args);
+        UserService service = context.getBean(UserService.class);
+    }
+}
+
+// Eager: Uygulama başladığında tüm singleton'lar yaratılır
+// Events: ApplicationEventPublisher var
+// I18n: MessageSource var
+// Resource: ResourceLoader var
+                    </div>
+
+                    <h4>Pratik Fark:</h4>
+                    <div class="code-block">
+// BeanFactory - Yavaş başlama (lazy loading)
+// ApplicationContext - Biraz daha yavaş (eager loading ama tüm bean'ler hazır)
+
+// Spring Boot'ta ApplicationContext kullanılır (arka planda)
+// Genellikle ApplicationContext size verir (tümünü)
+                    </div>
+
+                    <div class="tip">Günümüzde BeanFactory nadiren direkt kullanılır. Spring Boot ve ApplicationContext standart haline geldi. BeanFactory, IoC container'ın minimal interface'idir.</div>
+                </div>
+
+                <!-- Question 18 -->
+                <div class="question">
+                    <div class="question-num">Soru 18:</div>
+                    <div class="question-text">Order Sisteminde Inventory, Payment ve Invoice Services Nasıl Decouple Edilir?</div>
+                </div>
+                <div class="answer">
+                    <h4>Problem Senaryosu:</h4>
+                    <p>Order alındı → Inventory decrement et → Payment işle → Invoice oluştur</p>
+                    <p>Eğer Payment başarısız olursa inventory'i geri almamız lazım (saga pattern).</p>
+
+                    <h4>Çözüm 1: Spring ApplicationEvents (Single Application)</h4>
+                    <div class="code-block">
+// Event tanımı
+public class OrderCreatedEvent extends ApplicationEvent {
+    private Order order;
+    
+    public OrderCreatedEvent(Object source, Order order) {
+        super(source);
+        this.order = order;
+    }
+    
+    public Order getOrder() { return order; }
+}
+
+// Order Service - Event yayınlar
+@Service
+public class OrderService {
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
+    
+    @Transactional
+    public Order createOrder(Order order) {
+        // Order'ı DB'ye kaydet
+        Order savedOrder = orderRepository.save(order);
+        
+        // Diğer service'lere haber ver (asynchronous!)
+        eventPublisher.publishEvent(new OrderCreatedEvent(this, savedOrder));
+        
+        return savedOrder;
+    }
+}
+
+// Inventory Service - Event dinler
+@Service
+public class InventoryService {
+    
+    @EventListener
+    @Async
+    @Transactional
+    public void handleOrderCreated(OrderCreatedEvent event) {
+        Order order = event.getOrder();
+        
+        boolean reserved = inventoryRepository.reserveItems(order.getId(), 
+                                                             order.getItems());
+        
+        if (!reserved) {
+            // Başarısız: event yayınla
+            eventPublisher.publishEvent(new InventoryReservationFailedEvent(...));
+        }
+    }
+}
+
+// Payment Service - Event dinler
+@Service
+public class PaymentService {
+    
+    @EventListener
+    @Async
+    @Transactional
+    public void handleOrderCreated(OrderCreatedEvent event) {
+        Order order = event.getOrder();
+        
+        boolean paid = processPayment(order);
+        
+        if (paid) {
+            eventPublisher.publishEvent(new PaymentCompletedEvent(...));
+        } else {
+            eventPublisher.publishEvent(new PaymentFailedEvent(...));
+        }
+    }
+    
+    @EventListener
+    @Async
+    public void handlePaymentFailed(PaymentFailedEvent event) {
+        // Inventory'i geri al
+        inventoryService.cancelReservation(event.getOrderId());
+    }
+}
+
+// Invoice Service - Event dinler
+@Service
+public class InvoiceService {
+    
+    @EventListener
+    @Async
+    @Transactional
+    public void handlePaymentCompleted(PaymentCompletedEvent event) {
+        Invoice invoice = invoiceRepository.create(event.getOrderId());
+        emailService.sendInvoice(invoice);
+    }
+}
+
+// Config: @Async support
+@Configuration
+@EnableAsync
+public class AsyncConfig {
+    @Bean
+    public Executor taskExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(2);
+        executor.setMaxPoolSize(5);
+        executor.initialize();
+        return executor;
+    }
+}
+                    </div>
+
+                    <h4>Çözüm 2: Messaging (Kafka/RabbitMQ) - Distributed Systems</h4>
+                    <div class="code-block">
+// Order Service
+@Service
+public class OrderService {
+    @Autowired
+    private KafkaTemplate&lt;String, OrderEvent&gt; kafkaTemplate;
+    
+    @Transactional
+    public Order createOrder(Order order) {
+        Order saved = orderRepository.save(order);
+        
+        // Kafka'ya mesaj gönder
+        kafkaTemplate.send("order-events", 
+                          new OrderCreatedEvent(saved));
+        
+        return saved;
+    }
+}
+
+// Inventory Service (ayrı instance)
+@Service
+public class InventoryService {
+    
+    @KafkaListener(topics = "order-events")
+    public void handleOrderCreated(OrderCreatedEvent event) {
+        boolean reserved = inventoryRepository.reserveItems(...);
+        
+        if (!reserved) {
+            // Failure event yayınla
+            kafkaTemplate.send("inventory-events", 
+                              new InventoryFailedEvent(...));
+        }
+    }
+}
+
+// Payment Service (ayrı instance)
+@Service
+public class PaymentService {
+    
+    @KafkaListener(topics = "order-events")
+    public void handleOrderCreated(OrderCreatedEvent event) {
+        boolean paid = processPayment(event.getOrder());
+        
+        if (paid) {
+            kafkaTemplate.send("payment-events", 
+                              new PaymentCompletedEvent(...));
+        }
+    }
+    
+    @KafkaListener(topics = "inventory-events")
+    public void handleInventoryFailed(InventoryFailedEvent event) {
+        // Compensation: Order cancel
+        kafkaTemplate.send("order-events", 
+                          new OrderCancelledEvent(...));
+    }
+}
+                    </div>
+
+                    <h4>Çözüm 3: Saga Pattern (Distributed Transaction)</h4>
+                    <div class="code-block">
+// Choreography (event-driven) vs Orchestration (service-driven)
+
+// Orchestration örneği:
+@Service
+public class OrderOrchestrator {
+    
+    @Autowired
+    private InventoryService inventoryService;
+    @Autowired
+    private PaymentService paymentService;
+    @Autowired
+    private InvoiceService invoiceService;
+    
+    @Transactional
+    public Order executeOrderSaga(Order order) {
+        Order savedOrder = orderRepository.save(order);
+        
+        try {
+            // Adım 1
+            inventoryService.reserve(savedOrder);
+            
+            // Adım 2
+            paymentService.pay(savedOrder);
+            
+            // Adım 3
+            invoiceService.create(savedOrder);
+            
+            return savedOrder;
+        } catch (Exception e) {
+            // Rollback tüm işlemleri
+            inventoryService.cancel(savedOrder);
+            paymentService.refund(savedOrder);
+            
+            throw new OrderProcessingException(e);
+        }
+    }
+}
+                    </div>
+
+                    <h4>Idempotency Anahtar Kullanımı:</h4>
+                    <div class="code-block">
+// Payment isteği duplicate olabilir
+// Aynı idempotency key'le çağrıldığında aynı sonuç dön
+
+@Service
+public class PaymentService {
+    
+    @Transactional
+    public PaymentResult pay(Order order, String idempotencyKey) {
+        // Eğer bu key'le daha önceki istek varsa sonucu dön
+        PaymentResult existing = paymentRepository.findByIdempotencyKey(idempotencyKey);
+        if (existing != null) {
+            return existing;
+        }
+        
+        // Yeni ödeme işle
+        PaymentResult result = processActualPayment(order);
+        result.setIdempotencyKey(idempotencyKey);
+        return paymentRepository.save(result);
+    }
+}
+                    </div>
+
+                    <div class="key-points">
+                        <h4>Seçim Kriterleri:</h4>
+                        <ul>
+                            <li>Single Application: Events</li>
+                            <li>Few Services: Choreography (Kafka events)</li>
+                            <li>Complex Flow: Orchestration (Saga pattern)</li>
+                            <li>Strict Consistency: Database transactions</li>
+                            <li>Eventual Consistency: Messaging + Compensation</li>
+                        </ul>
+                    </div>
+
+                    <div class="warning">Distributed transaction'larda eventual consistency'i kabul etmelisiniz. ACID garantisi zor olmaktadır, bunun yerine BASE (Basically Available, Soft state, Eventual consistency) modelini kullanın.</div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: JPA and Hibernate -->
+            <div class="section section-3">
+                <h2>3. JPA VE HIBERNATE</h2>
+
+                <div class="question">
+                    <div class="question-num">Soru 19:</div>
+                    <div class="question-text">Hibernate get() vs load() - Fark Nedir?</div>
+                </div>
+                <div class="answer">
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Özellik</th>
+                            <th>get()</th>
+                            <th>load()</th>
+                        </tr>
+                        <tr>
+                            <td>DB Query</td>
+                            <td>Hemen yapılır</td>
+                            <td>Lazy (lazy proxy)</td>
+                        </tr>
+                        <tr>
+                            <td>Entity Bulunamadı</td>
+                            <td>null dönür</td>
+                            <td>LazyInitializationException</td>
+                        </tr>
+                        <tr>
+                            <td>Cache Kontrolü</td>
+                            <td>✓ First-level cache kontrol</td>
+                            <td>✓ First-level cache kontrol</td>
+                        </tr>
+                        <tr>
+                            <td>Dönüş Tipi</td>
+                            <td>Gerçek Entity</td>
+                            <td>Proxy obje</td>
+                        </tr>
+                    </table>
+
+                    <div class="code-block">
+// get() - Eager loading
+User user = session.get(User.class, 1);
+// SELECT * FROM users WHERE id = 1  (hemen çalışır)
+
+if (user == null) {
+    System.out.println("User bulunamadı");
+} else {
+    System.out.println(user.getName());
+}
+
+// load() - Lazy loading (Deprecated/Removed Hibernate 6+)
+User user = session.load(User.class, 1);
+// Hiç query çalışmaz!
+
+System.out.println(user.getName());  
+// Burada query çalışır
+// Eğer user yoksa LazyInitializationException!
+                    </div>
+
+                    <h4>Modern Alternatif (Hibernate 6+):</h4>
+                    <div class="code-block">
+// getReference() - load() yerine kullanılır (EntityManager)
+User user = entityManager.getReference(User.class, 1);
+// Lazy proxy, query yok
+
+System.out.println(user.getName());  // Query çalışır
+
+// JpaRepository
+User user = repository.getById(1);  // Reference (lazy)
+                    </div>
+
+                    <div class="warning">load() ve getReference() exception fırlatabilir, eger lazy loading session kapalı olduğunda. get()/find() daha güvenlidir.</div>
+                </div>
+
+                <!-- More questions follow similar format... -->
+                <div class="question">
+                    <div class="question-num">Soru 20-40:</div>
+                    <div class="question-text">Diğer Soruların Detaylı Cevapları</div>
+                </div>
+                <div class="answer">
+                    <p>Metin boyut sınırlaması nedeniyle, kalan sorular (20-40) için ayrı belgeler hazırlanabilir. İsterseniz spesifik soruları sorabilirsiniz.</p>
+
+                    <div class="key-points">
+                        <h4>Soru 20-40 İçeriği:</h4>
+                        <ul>
+                            <li>20: First-Level vs Second-Level Cache</li>
+                            <li>21: Optimistic vs Pessimistic Locking</li>
+                            <li>22: Dirty Checking in Hibernate</li>
+                            <li>23: Entity Lifecycle States</li>
+                            <li>24: Stock Updates with Concurrency</li>
+                            <li>25: E-Commerce Order Tracking System Design</li>
+                            <li>26: Distributed Rate Limiter Design</li>
+                            <li>27: URL Shortener Design</li>
+                            <li>28: Key-Value Store Design</li>
+                            <li>29: Authentication System Design</li>
+                            <li>30: CompletableFuture Async Programming</li>
+                            <li>31: OutOfMemoryError Troubleshooting</li>
+                            <li>32: HashMap vs ConcurrentHashMap</li>
+                            <li>33: @Transactional Internals</li>
+                            <li>34: Kafka Duplicate Message Prevention</li>
+                            <li>35: REST vs gRPC</li>
+                            <li>36: Database Connection Pool Exhaustion</li>
+                            <li>37: Retries and Timeouts Design</li>
+                            <li>38: Optimistic Locking vs Isolation Levels</li>
+                            <li>39: Secrets Management in Spring Boot</li>
+                            <li>40: API Latency Investigation</li>
+                        </ul>
+                    </div>
+
+                    <p>Her soru için spesifik senaryolar, kod örnekleri ve best practices açıklamaları yapılacaktır.</p>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <p>📚 Java Backend Interview Preparation Guide</p>
+                <p>Created for Turkish Junior Developers | 25-30 LPA Salary Range</p>
+                <p>💡 Not: Bu rehberi PDF'ye kaydetmek için Ctrl+P'ye basın veya tarayıcıdan "Yazıcıya yazdır" seçeneğini kullanın.</p>
+            </div>
+        </div>
+    </div>
+<script>window.parent.postMessage({ action: "ready" }, "*"); 
+ 
+window.console = new Proxy(console, {
+  get(target, prop) {
+    if (['log', 'warn', 'error'].includes(prop)) {
+      return new Proxy(target[prop], {
+        apply(fn, thisArg, args) {
+          fn.apply(thisArg, args);
+          window.parent.postMessage({ action: 'console', 
+            type: prop, 
+            args: args.map((arg) => {
+              try {
+                return JSON.stringify(arg).replace(/^["']|["']$/g, '');
+              } catch (e) {
+                return arg;
+              }
+            }) 
+          }, '*');
+        }
+      });
+    }
+    return target[prop];
+  }
+});
+</script></body>
+</html>

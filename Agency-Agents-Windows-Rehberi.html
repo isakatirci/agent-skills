@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agency Agents: Windows'ta sıfırdan pratik rehber</title>
+  <style>
+    :root {
+      --ink: #1c1915;
+      --muted: #5c564c;
+      --line: #e4ddd2;
+      --paper: #f7f4ee;
+      --card: #fffdf9;
+      --accent: #1f4b3a;
+      --accent-soft: #e7f0eb;
+      --code: #241f1a;
+      --code-ink: #f4efe6;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "Segoe UI", sans-serif;
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    a { color: var(--accent); }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 240px minmax(0, 760px);
+      gap: 32px;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+
+    nav {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      padding-top: 8px;
+    }
+
+    nav p {
+      margin: 0 0 10px;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    nav ol {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      display: block;
+      padding: 5px 0;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    nav a:hover { color: var(--accent); }
+
+    header h1 {
+      margin: 0 0 12px;
+      font-size: 34px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      margin: 2.2em 0 0.6em;
+      font-size: 26px;
+      line-height: 1.25;
+      scroll-margin-top: 20px;
+    }
+
+    h3 {
+      margin: 1.6em 0 0.4em;
+      font-size: 19px;
+      scroll-margin-top: 20px;
+    }
+
+    p { margin: 0.7em 0; }
+
+    .lead {
+      font-size: 18px;
+      color: #3a342c;
+    }
+
+    .note {
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      margin: 16px 0;
+    }
+
+    ol, ul { padding-left: 1.3em; }
+    li + li { margin-top: 0.25em; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 8px;
+      background: var(--card);
+      font-size: 15px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    th {
+      background: #efeae2;
+      font-weight: 650;
+    }
+
+    code, .path {
+      font-family: Consolas, "Cascadia Mono", monospace;
+      font-size: 0.92em;
+    }
+
+    p code, li code, td code {
+      background: #efeae2;
+      padding: 0.1em 0.35em;
+      border-radius: 4px;
+    }
+
+    .code {
+      position: relative;
+      margin: 14px 0 18px;
+    }
+
+    pre {
+      margin: 0;
+      padding: 16px 16px 14px;
+      overflow-x: auto;
+      background: var(--code);
+      color: var(--code-ink);
+      border-radius: 10px;
+      font-family: Consolas, "Cascadia Mono", monospace;
+      font-size: 14.5px;
+      line-height: 1.55;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+      color: inherit;
+      font-size: inherit;
+    }
+
+    .copy {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      border: 0;
+      border-radius: 6px;
+      padding: 5px 10px;
+      background: #efeae2;
+      color: var(--ink);
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .copy:hover { background: #fff; }
+
+    .trouble dt {
+      margin-top: 14px;
+      font-weight: 700;
+    }
+
+    .trouble dd { margin: 4px 0 0; }
+
+    @media (max-width: 860px) {
+      .layout {
+        grid-template-columns: 1fr;
+        padding: 20px 16px 64px;
+      }
+
+      nav { position: static; }
+
+      header h1 { font-size: 28px; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .layout { display: block; max-width: none; }
+      nav, .copy { display: none; }
+      pre { white-space: pre-wrap; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <nav aria-label="İçindekiler">
+      <p>İçindekiler</p>
+      <ol>
+        <li><a href="#sira">Bugünkü sıra</a></li>
+        <li><a href="#nedir">Nedir</a></li>
+        <li><a href="#once">Başlamadan önce</a></li>
+        <li><a href="#klasor">1. Pratik klasörü</a></li>
+        <li><a href="#yol1">2. Masaüstü uygulama</a></li>
+        <li><a href="#yol2">3. Git Bash</a></li>
+        <li><a href="#cursor">4. Cursor'da açın</a></li>
+        <li><a href="#cagirma">5. Ajanı çağırma</a></li>
+        <li><a href="#p1">Pratik 1</a></li>
+        <li><a href="#p2">Pratik 2</a></li>
+        <li><a href="#p3">Pratik 3</a></li>
+        <li><a href="#p4">Pratik 4</a></li>
+        <li><a href="#tuttu">Kurulum tuttu mu</a></li>
+        <li><a href="#sonra">Bundan sonra</a></li>
+        <li><a href="#takilma">Sık takılmalar</a></li>
+        <li><a href="#harita">Bölüm haritası</a></li>
+        <li><a href="#kaynak">Kaynaklar</a></li>
+      </ol>
+    </nav>
+
+    <main>
+      <header>
+        <h1>Agency Agents: Windows'ta sıfırdan pratik rehber</h1>
+        <p class="lead">Bu rehber, bilgisayarınızda Agency Agents ile pratik yapmanız içindir. Araç Cursor. Komutlar sizin çalıştırmanız için yazıldı. Bu dosya hazırlanırken kurulum yapılmadı ve terminal açılmadı.</p>
+      </header>
+
+      <p>İndirdiğiniz GitHub kaydı, çalışan bir program değildir. O dosya, deponun tarayıcıda kaydedilmiş sayfasıdır:</p>
+      <p><code>C:\Users\isa\Downloads\msitarzewski_agency-agents： A complete AI agency at your fingertips - From frontend wizards to Reddit community ninjas, from whimsy injectors to reality checkers. Each agent is a spe….html</code></p>
+      <p>Canlı sayfa: <a href="https://github.com/msitarzewski/agency-agents">github.com/msitarzewski/agency-agents</a></p>
+      <p>Kayıt anında depo, 230'dan fazla uzman metin ve bir Windows masaüstü uygulaması anlatıyordu. Uygulama rozeti o kayıtta v0.3.2 idi. İndirirken releases sayfasındaki en yeni Windows dosyasını alın.</p>
+
+      <h2 id="sira">Bugün izleyeceğiniz sıra</h2>
+      <ol>
+        <li>Boş bir pratik klasörü açın.</li>
+        <li>Aşağıdaki iki yoldan biriyle yalnızca üç ajan kurun.</li>
+        <li>O klasörü Cursor'da açın.</li>
+        <li><code>.cursor\rules</code> içinde kural dosyalarını görün.</li>
+        <li>Dört pratiği, her biri yeni bir sohbette olmak üzere sırayla yapın.</li>
+      </ol>
+      <p>Üç ajan:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Ajan</th>
+            <th>Bölüm</th>
+            <th>Dosya adı</th>
+            <th>Ne işe yarar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Frontend Developer</td>
+            <td>Engineering</td>
+            <td><code>engineering-frontend-developer</code></td>
+            <td>Arayüz kurar. React, Vue, Angular, sade HTML.</td>
+          </tr>
+          <tr>
+            <td>Reality Checker</td>
+            <td>Testing</td>
+            <td><code>testing-reality-checker</code></td>
+            <td>İş yayına hazır mı diye kanıta göre denetler.</td>
+          </tr>
+          <tr>
+            <td>Whimsy Injector</td>
+            <td>Design</td>
+            <td><code>design-whimsy-injector</code></td>
+            <td>Eğlenceli bir dokunuş ekler. O dokunuşun bir işi olmalıdır.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="nedir">Agency Agents nedir</h2>
+      <p>Her ajan bir uzman tarifidir. Dosyasında kimlik, konuşma biçimi, iş akışı, beklenen çıktı ve başarı ölçüsü vardır. Cursor'da o kuralı seçince sohbet o uzmanın usulüne girer.</p>
+      <p>Ajan, arka planda kendi başına gezinen bir çalışan değildir. Reddit Community Builder, Reddit üslubunda metin yazar. Sizin adınıza siteye girmez, yorum bırakmaz. Siz isteği yazarsınız, Cursor cevaplar, sonucu siz kaydedersiniz.</p>
+      <p>Sayfanın kendi tanımı da budur: uzmanlık, kişilik ve teslim edilecek iş. Lisans MIT'tir. Kişisel pratikte kullanabilirsiniz.</p>
+
+      <h2 id="once">Başlamadan önce</h2>
+      <p>Şunlar yeter:</p>
+      <ul>
+        <li>Windows 10 veya 11</li>
+        <li>Cursor (bu sohbetin açık olduğu program)</li>
+        <li>İnternet</li>
+        <li>Boş bir klasör</li>
+      </ul>
+      <p>Masaüstü uygulamayı seçerseniz Git gerekmez. Komut satırı yolunu seçerseniz Git for Windows gerekir. İndirme adresi: <a href="https://git-scm.com/download/win">git-scm.com/download/win</a></p>
+      <p>Kurulumda varsayılanlar uygundur. Bitince Başlat menüsünde <strong>Git Bash</strong> görünür. Bu rehberdeki komutlar Git Bash içindir. PowerShell bu betikleri çalıştırmaz.</p>
+
+      <h2 id="klasor">1. Pratik klasörü</h2>
+      <p>Dosya Gezgini'nde şu klasörü oluşturun:</p>
+      <p><code>C:\Users\isa\ajan-pratik</code></p>
+      <p>Başka bir boş klasör de olur. Seçerseniz aşağıdaki yollarda aynı klasörü kullanın. İçinde henüz proje olması gerekmez. Ajanlar bu klasörün <code>.cursor\rules</code> dizinine iner. Cursor'da açık olan klasör bu olmalıdır. Başka bir klasör açıkken kurulan kurallar, o anki sohbette görünmez.</p>
+
+      <h2 id="yol1">2. Yol 1: Masaüstü uygulama</h2>
+      <p>Sayfanın önerdiği yol budur. Depo klonlanmaz, betik çalışmaz, uygulama kadroyu güncel tutar.</p>
+      <ol>
+        <li>Şu sayfayı açın: <a href="https://github.com/msitarzewski/agency-agents-app/releases/latest">agency-agents-app releases</a></li>
+        <li>Windows kurulum dosyasını indirin. Kayıttaki rozet v0.3.2 idi. Sayfada daha yeni bir sürüm varsa onu alın. Site: <a href="https://agencyagents.app/">agencyagents.app</a></li>
+        <li>Dosyayı çalıştırın. Windows uyarı verirse, dosyayı bu releases sayfasından indirdiğinizden emin olun. Türkçe pencerede <strong>Diğer bilgiler</strong>, ardından <strong>Yine de çalıştır</strong>. İngilizce pencerede <strong>More info</strong>, ardından <strong>Run anyway</strong>.</li>
+        <li>Uygulamada hedef araç olarak <strong>Cursor</strong> seçin.</li>
+        <li>Hedef klasör olarak <code>C:\Users\isa\ajan-pratik</code> seçin. Uygulama klasör sorarsa pratik klasörünü gösterin.</li>
+        <li>Kurulacak ajanlar: <strong>Frontend Developer</strong>, <strong>Reality Checker</strong>, <strong>Whimsy Injector</strong>.</li>
+      </ol>
+      <div class="note">
+        <p>Uygulama tek düğmeyle bütün kadroyu kuruyor ve üç ajan seçmenize izin vermiyorsa bu yolu bırakın. Yol 2, ajanı tek tek kurar. İlk pratikte üç ajan yeter. 230 kural birden <code>.cursor\rules</code> içine girerse her sohbet bu metinlerle dolar ve cevaplar yavaşlar, dağılır.</p>
+      </div>
+      <p>Kurulum bitince Dosya Gezgini'nde şuna bakın:</p>
+      <p><code>C:\Users\isa\ajan-pratik\.cursor\rules</code></p>
+      <p>Burada <code>.mdc</code> dosyaları görünüyorsa kurulum klasöre inmiştir.</p>
+
+      <h2 id="yol2">3. Yol 2: Git Bash ile üç ajan</h2>
+      <p>Bu yol, uygulamadaki seçim size üç ajanı ayırma imkanı vermezse kullanılır. Aynı üç uzmanı, yalnızca pratik klasörüne kurar.</p>
+
+      <h3>Git Bash'i açın</h3>
+      <p>Başlat menüsünde <strong>Git Bash</strong> yazın ve onu açın. Pencerenin başlığında Git Bash yazar. PowerShell veya Cursor terminali bu adım için uygun kabuk değildir.</p>
+
+      <h3>Depoyu indirin</h3>
+      <div class="code">
+        <button type="button" class="copy">Kopyala</button>
+        <pre><code>cd /c/Users/isa
+git clone https://github.com/msitarzewski/agency-agents.git</code></pre>
+      </div>
+      <p>Bu, depoyu <code>C:\Users\isa\agency-agents</code> altına alır. Pratik klasöründen ayrı durur. Bir kez indirmek yeter.</p>
+
+      <h3>Araç dosyalarını üretin</h3>
+      <p>Sayfa önce dönüştürmeyi, sonra kurmayı söyler. Cursor kuralları <code>.mdc</code> dosyasıdır. Dönüştürme onları hazırlar.</p>
+      <div class="code">
+        <button type="button" class="copy">Kopyala</button>
+        <pre><code>cd /c/Users/isa/agency-agents
+./scripts/convert.sh</code></pre>
+      </div>
+      <p>Bu adım bütün araçlar için dosya üretir ve birkaç dakika sürebilir. Bitmesini bekleyin.</p>
+
+      <h3>Üç ajanı pratik klasörüne kurun</h3>
+      <p>Kurulum, o anda bulunduğunuz klasöre yazar. Önce pratik klasörüne geçin.</p>
+      <div class="code">
+        <button type="button" class="copy">Kopyala</button>
+        <pre><code>cd /c/Users/isa/ajan-pratik
+/c/Users/isa/agency-agents/scripts/install.sh --tool cursor --agent engineering-frontend-developer,design-whimsy-injector,testing-reality-checker</code></pre>
+      </div>
+      <p><code>--agent</code> şunların üçünü de kabul eder: <code>--list agents</code> çıktısındaki kısa ad, ekranda görünen ad, veya <code>.md</code> uzantısız dosya adı. Yukarıdaki üç ad, sayfadaki dosya adlarıdır.</p>
+      <p>Betik bir adı tanımazsa listeyi açın:</p>
+      <div class="code">
+        <button type="button" class="copy">Kopyala</button>
+        <pre><code>cd /c/Users/isa/agency-agents
+./scripts/install.sh --list agents</code></pre>
+      </div>
+      <p>Listeden kopyaladığınız adlarla kurulum satırını yeniden çalıştırın. Takım listesi için:</p>
+      <div class="code">
+        <button type="button" class="copy">Kopyala</button>
+        <pre><code>./scripts/install.sh --list teams</code></pre>
+      </div>
+      <p>Kurulum yine <code>C:\Users\isa\ajan-pratik</code> içindeyken çalışmalıdır. Kontrol:</p>
+      <p><code>C:\Users\isa\ajan-pratik\.cursor\rules</code></p>
+
+      <h2 id="cursor">4. Cursor'da klasörü açın</h2>
+      <ol>
+        <li>Cursor'da <strong>File &gt; Open Folder</strong>.</li>
+        <li><code>C:\Users\isa\ajan-pratik</code> klasörünü seçin.</li>
+        <li>Sol tarafta <code>.cursor</code> ve onun içinde <code>rules</code> görünmeli.</li>
+        <li>Bir <code>.mdc</code> dosyasını açın.</li>
+      </ol>
+      <p>Dosyanın en üstünde <code>alwaysApply: true</code> yazıyorsa, pratik boyunca bu üç dosyada onu <code>false</code> yapın. Kural o zaman her mesaja kendiliğinden karışmaz. Siz <code>@</code> ile seçince devreye girer. Anahtar yoksa dosyayı olduğu gibi bırakın ve yine <code>@</code> ile seçin.</p>
+      <p>Resmi Cursor örneği şöyledir:</p>
+      <div class="code">
+        <button type="button" class="copy">Kopyala</button>
+        <pre><code>Use the @security-engineer rules to review this code.</code></pre>
+      </div>
+      <p>Sizde güvenlik ajanı yüklü değildir. Aynı cümle kalıbını, seçtiğiniz uzmanla kullanırsınız.</p>
+
+      <h2 id="cagirma">5. Bir ajanı çağırma</h2>
+      <p>Her pratik için yeni bir sohbet açın. Önceki sohbetin rolü yeni işe taşınmasın.</p>
+      <ol>
+        <li>Sohbet kutusuna <code>@</code> yazın.</li>
+        <li>Listeden bu işin kuralını seçin. Ad, Frontend Developer, Reality Checker veya Whimsy Injector diye görünür. Dosya adı da görünebilir.</li>
+        <li>Aşağıdaki görev metnini yapıştırın.</li>
+        <li>Gönderin.</li>
+        <li>Cevap bitince dosyanın klasörde oluştuğuna bakın.</li>
+      </ol>
+      <p>Ajan kendi adıyla ve kendi kontrol listesiyle cevaplıyorsa kural tutulmuştur. Düz, genel bir cevap geliyorsa <code>@</code> ile kural seçilmemiştir veya Cursor'da açık klasör <code>ajan-pratik</code> değildir.</p>
+      <p>Görev metinleri Türkçedir. Ajanların kendi metni İngilizcedir. Her görevin son satırı cevabı Türkçe ister.</p>
+      <p>Aynı anda bir ajan çalışsın. İş bitince diğerine geçin.</p>
+
+      <h2 id="p1">Pratik 1: Kişisel kart</h2>
+      <p>Ajan: <strong>Frontend Developer</strong>. Yeni sohbet. <code>@</code> ile bu kuralı seçin.</p>
+      <div class="code">
+        <button type="button" class="copy">Kopyala</button>
+        <pre><code>Frontend Developer olarak çalış.
+
+Tek dosyalık bir sayfa yaz: kişisel kart.
+İçinde bir ad alanı, bir cümlelik tanıtım, üç madde ve bir düğme olsun.
+Sayfa telefonda da okunsun.
+Dosyayı bu klasöre index.html olarak kaydet.
+Bitince neyi neden seçtiğini beş maddede yaz.
+Cevabı Türkçe yaz.</code></pre>
+      </div>
+      <p>Beklenen sonuç: <code>C:\Users\isa\ajan-pratik\index.html</code> oluşur. Tarayıcıda bu dosyayı açın. Ad, cümle, üç madde ve düğme görünür.</p>
+
+      <h2 id="p2">Pratik 2: Yayına hazır mı</h2>
+      <p>Ajan: <strong>Reality Checker</strong>. Yeni sohbet. <code>@</code> ile bu kuralı seçin. <code>index.html</code> duruyor olmalı.</p>
+      <div class="code">
+        <button type="button" class="copy">Kopyala</button>
+        <pre><code>Reality Checker olarak çalış.
+
+Bu klasördeki index.html dosyasını yayına hazırlık açısından denetle.
+Kanıtı dosyadan çıkar.
+Eksik, kırık veya abartılı her maddeyi listele.
+Her madde için üç satır yaz: sorun, neden önemli, tek cümlelik düzeltme.
+Yeni özellik ekleme. Yalnızca denetim yaz.
+Cevabı Türkçe yaz.</code></pre>
+      </div>
+      <p>Beklenen sonuç: cevap bir övgü paragrafı değildir. Maddeler, dosyada gördüğü şeye bağlıdır. "Her şey mükemmel" deyip geçiyorsa, denetim ajanı seçilmemiştir.</p>
+      <p>Sayfadaki işi şudur: kanıta dayalı onay, yayına hazırlık, sürüm onayı.</p>
+
+      <h2 id="p3">Pratik 3: İşe yarayan bir sevinç</h2>
+      <p>Ajan: <strong>Whimsy Injector</strong>. Yeni sohbet. <code>@</code> ile bu kuralı seçin.</p>
+      <p>Sayfadaki ölçüt: oynak öğe, işlevsel ya da duygusal bir amaca hizmet eder. Süs, okumayı zorlaştırmaz.</p>
+      <div class="code">
+        <button type="button" class="copy">Kopyala</button>
+        <pre><code>Whimsy Injector olarak çalış.
+
+index.html içine tek bir küçük sevinç anı ekle.
+Bu ekleme bir işe yarasın: düğmeye basınca ne olduğu anlaşılsın.
+Süs, okumayı ve düğmeyi zorlaştırmasın.
+Değişikliği dosyaya yaz.
+Neden bu hareketi seçtiğini üç cümlede yaz.
+Cevabı Türkçe yaz.</code></pre>
+      </div>
+      <p>Beklenen sonuç: sayfada bir hareket vardır ve düğmenin sonucu hâlâ anlaşılır. Tarayıcıda dosyayı yenileyip düğmeye basın.</p>
+
+      <h2 id="p4">Pratik 4: Kısa ekip sırası</h2>
+      <p>Sayfadaki ilk gerçek senaryo bir MVP ekibidir: Frontend Developer, Backend Architect, Growth Hacker, Rapid Prototyper, Reality Checker. Bu pratik o senaryonun kısa halidir. Ekip iki kişidir. Önce arayüz, sonra denetim. İkinci uzman, birincinin metnini görmek için yeni sohbette dosyayı okur.</p>
+      <p>Konu: tek sayfalık bir haftalık alışveriş listesi. Hesap, sunucu ve üyelik yok.</p>
+
+      <h3 id="p4a">4a. Arayüz</h3>
+      <p>Yeni sohbet. <strong>Frontend Developer</strong>.</p>
+      <div class="code">
+        <button type="button" class="copy">Kopyala</button>
+        <pre><code>Frontend Developer olarak çalış.
+
+Tek sayfalık bir haftalık alışveriş listesi yaz.
+Ürün adı yazılabilsin, listeye eklensin, işaretlenince üstü çizilsin.
+Veriler bu tarayıcıda kalsın. Sunucu kurma.
+Dosya adı alisveris.html olsun.
+Bitince sayfanın nasıl kullanılacağını dört maddede yaz.
+Cevabı Türkçe yaz.</code></pre>
+      </div>
+      <p>Tarayıcıda <code>alisveris.html</code> dosyasını açın. Bir ürün ekleyin, işaretleyin, sayfayı yenileyin. Ürün duruyorsa tarayıcı kaydı çalışıyordur.</p>
+
+      <h3 id="p4b">4b. Devir</h3>
+      <p>Yeni sohbet. <strong>Reality Checker</strong>. Bir önceki sohbetin metnini taşımayın. Ajan dosyayı kendisi okusun.</p>
+      <div class="code">
+        <button type="button" class="copy">Kopyala</button>
+        <pre><code>Reality Checker olarak çalış.
+
+alisveris.html dosyasını yayına hazırlık açısından denetle.
+Şunları dosyadan kontrol et:
+- ürün eklenebiliyor mu
+- işaretlenince üstü çiziliyor mu
+- sayfa yenilenince liste duruyor mu
+- boş ürün eklenebiliyor mu
+Her madde için: gözlem, risk, tek düzeltme.
+Kodu sen yazma. Denetim raporu yaz.
+Cevabı Türkçe yaz.</code></pre>
+      </div>
+      <p>Raporu okuyun. Düzeltmek isterseniz üçüncü bir sohbet açın, yine Frontend Developer seçin ve rapordaki düzeltme cümlelerini yapıştırın. "Raporun dışına yeni özellik ekleme" satırını da yazın. Böylece ekip sırası bozulmaz: biri yapar, biri denetler, biri yalnızca istenen düzeltmeyi uygular.</p>
+
+      <h2 id="tuttu">Kurulum tuttu mu</h2>
+      <p>Şu dört işaret bir aradaysa pratik tamamdır:</p>
+      <ul>
+        <li><code>ajan-pratik\.cursor\rules</code> içinde en az bir <code>.mdc</code> vardır.</li>
+        <li>Cursor'da açık klasör <code>ajan-pratik</code>tir.</li>
+        <li>Cevap, seçtiğiniz uzman gibi konuşur ve istenen dosyayı yazar.</li>
+        <li>Reality Checker, dosyada gördüğü eksikleri maddeler.</li>
+      </ul>
+      <p>Düz genel cevapta şunlara bakın:</p>
+      <ul>
+        <li>Sohbette <code>@</code> ile kural seçili mi.</li>
+        <li>Açık klasör <code>C:\Users\isa\ajan-pratik</code> mi.</li>
+        <li>Kural dosyası başka bir projenin <code>.cursor\rules</code> klasöründe mi kalmış.</li>
+        <li><code>alwaysApply: true</code> olan çok sayıda kural aynı anda mı dolmuş. Pratik setinde bu üç dosyada <code>false</code> kalsın.</li>
+      </ul>
+
+      <h2 id="sonra">Bundan sonra nasıl kullanılır</h2>
+      <p>Bir iş, bir uzman, bir çıktı. Mesajın içinde şunlar bulunsun:</p>
+      <ul>
+        <li>uzmanın adı</li>
+        <li>üretilecek dosya veya rapor</li>
+        <li>yapmayacağı şey</li>
+        <li>cevap dili</li>
+      </ul>
+      <p>Örnek kalıp:</p>
+      <div class="code">
+        <button type="button" class="copy">Kopyala</button>
+        <pre><code>Frontend Developer olarak çalış.
+Şu dosyayı düzenle: index.html
+İstenen: düğmenin metnini "Merhaba" yap.
+Yapma: yeni sayfa ekleme.
+Bitince değişen satırı yaz.
+Cevabı Türkçe yaz.</code></pre>
+      </div>
+      <p>Yeni bir bölüme geçmek istediğinizde, yine hepsini yüklemeyin. Git Bash yolunda, pratik klasöründeyken tek bölüm kurulur:</p>
+      <div class="code">
+        <button type="button" class="copy">Kopyala</button>
+        <pre><code>cd /c/Users/isa/ajan-pratik
+/c/Users/isa/agency-agents/scripts/install.sh --tool cursor --division engineering</code></pre>
+      </div>
+      <p>Bölüm adları <code>--list teams</code> çıktısındadır. Masaüstü uygulamada da aynı şekilde daraltın: o günkü işin ekibi.</p>
+      <p>Sayfadaki diğer çağrı cümleleri, kural seçildikten sonra da çalışır:</p>
+      <div class="code">
+        <button type="button" class="copy">Kopyala</button>
+        <pre><code>Use the Frontend Developer agent to review this component.
+Use the Reality Checker agent to verify this is production ready.</code></pre>
+      </div>
+
+      <h2 id="takilma">Sık takılmalar</h2>
+      <dl class="trouble">
+        <dt>Windows kurulum uyarısı</dt>
+        <dd>Releases sayfasından inen dosyada SmartScreen uyarısı çıkabilir. Kaynağı siz indirdiyseniz Diğer bilgiler ve Yine de çalıştır ile devam edilir.</dd>
+        <dt>Bütün kadro</dt>
+        <dd>İlk gün 230 ajan kurmak pratik değildir. Her sohbetin bağlamı dolar. Üç ajanla başlayın. İş büyüyünce tek bölüm ekleyin.</dd>
+        <dt>Yanlış pencere</dt>
+        <dd><code>./scripts/install.sh</code> satırı Git Bash içindir. PowerShell bu yazımı çalıştırmaz.</dd>
+        <dt>Yanlış klasör</dt>
+        <dd>Kurulum, komutun çalıştığı klasöre yazar. <code>cd /c/Users/isa/ajan-pratik</code> satırından sonra kurun. Cursor da bu klasörü açsın.</dd>
+        <dt>Ajanın kendi kendine yayın yapması</dt>
+        <dd>Marketing bölümündeki Reddit Community Builder bir yazar rolüdür. Hesabınıza girip paylaşım yapmaz.</dd>
+        <dt>Dönüştürme uzun sürer</dt>
+        <dd><code>./scripts/convert.sh</code> çok sayıda araç için dosya üretir. Pencereyi kapatmadan bitmesini bekleyin.</dd>
+        <dt>Ajan adı bulunamadı</dt>
+        <dd><code>./scripts/install.sh --list agents</code> çıktısındaki adı kullanın. Dosya adları şunlardır: <code>engineering-frontend-developer</code>, <code>design-whimsy-injector</code>, <code>testing-reality-checker</code>.</dd>
+      </dl>
+
+      <h2 id="harita">Bölüm haritası</h2>
+      <p>Tam liste kaydettiğiniz HTML sayfasında ve GitHub README içindedir. Burada yalnızca bölümlerin yönü var.</p>
+      <ul>
+        <li><strong>Engineering.</strong> Yazılım, arayüz, API. Frontend Developer burada.</li>
+        <li><strong>Design.</strong> Görünüş, kişilik, görsel anlatım. Whimsy Injector burada.</li>
+        <li><strong>Paid Media.</strong> Ücretli reklam hesapları, ölçüm, ilan metni.</li>
+        <li><strong>Sales.</strong> Satış görüşmesi ve teklif.</li>
+        <li><strong>Marketing.</strong> İçerik, sosyal mecra, topluluk metni.</li>
+        <li><strong>Product.</strong> Ürün kararı ve kapsam.</li>
+        <li><strong>Project Management.</strong> Plan, görev, teslim sırası.</li>
+        <li><strong>Testing.</strong> Kanıt, görsel kontrol, yayına hazırlık. Reality Checker burada.</li>
+        <li><strong>Security.</strong> Güvenlik incelemesi.</li>
+        <li><strong>Support.</strong> Destek yanıtı ve rapor.</li>
+        <li><strong>Spatial Computing.</strong> Mekansal ve XR arayüz.</li>
+        <li><strong>Specialized.</strong> Tek bir dar iş için yazılmış roller.</li>
+        <li><strong>Finance.</strong> Finans işleri.</li>
+        <li><strong>Game Development.</strong> Oyun geliştirme.</li>
+        <li><strong>Academic.</strong> Akademik işler.</li>
+        <li><strong>GIS.</strong> Harita, konum, kampüs ve saha verisi.</li>
+        <li><strong>Healthcare.</strong> Sağlık ürünü ve düzen.</li>
+        <li><strong>Research.</strong> Araştırma.</li>
+      </ul>
+      <p>Sayfadaki hazır ekiplerden biri, startup MVP ekibidir. Pratik 4 onun kısaltılmış halidir. Tam ekip beş roldür: Frontend Developer, Backend Architect, Growth Hacker, Rapid Prototyper, Reality Checker. Onları ancak ilk dört pratik bittikten sonra, yine seçerek ekleyin.</p>
+
+      <h2 id="kaynak">Kaynaklar</h2>
+      <ul>
+        <li>Depo: <a href="https://github.com/msitarzewski/agency-agents">github.com/msitarzewski/agency-agents</a></li>
+        <li>Windows uygulamasının sürümleri: <a href="https://github.com/msitarzewski/agency-agents-app/releases/latest">agency-agents-app releases</a></li>
+        <li>Uygulama sitesi: <a href="https://agencyagents.app/">agencyagents.app</a></li>
+        <li>Cursor kurulum notu, depo içinde: <code>integrations/cursor/README.md</code></li>
+        <li>Lisans: MIT</li>
+        <li>Kaydettiğiniz sayfa: İndirilenler klasöründeki <code>msitarzewski_agency-agents</code> HTML dosyası</li>
+      </ul>
+      <p>Depo zamanla büyür. Ajan sayısı ve sürüm numarası değişebilir. Komutların şekli bu rehberde, kaydettiğiniz sayfadaki Quick Start ve Cursor bölümüne göredir.</p>
+    </main>
+  </div>
+  <script>
+    document.querySelectorAll(".copy").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var block = button.parentElement.querySelector("code");
+        var text = block.innerText.replace(/\n$/, "");
+        function done() {
+          button.textContent = "Kopyalandı";
+          setTimeout(function () { button.textContent = "Kopyala"; }, 1400);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done).catch(function () {
+            fallback(text);
+            done();
+          });
+        } else {
+          fallback(text);
+          done();
+        }
+      });
+    });
+
+    function fallback(text) {
+      var area = document.createElement("textarea");
+      area.value = text;
+      document.body.appendChild(area);
+      area.select();
+      document.execCommand("copy");
+      area.remove();
+    }
+  </script>
+</body>
+</html>

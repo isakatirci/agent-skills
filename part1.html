@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Java Backend Mülakat Rehberi - 40 Soru (3 Parça)</title>
+
+  <!-- PrismJS: colorful code (VS Code gibi IDE'de birebir olmaz, ama browser'da renkli görünür) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      text-align: left;
+      line-height: 1.6;
+      margin: 24px;
+      color: #111;
+    }
+
+    h1 {
+      text-align: left;
+    }
+
+    .part {
+      margin-top: 26px;
+      padding-top: 12px;
+      border-top: 2px solid #eee;
+    }
+
+    .q {
+      margin: 18px 0;
+      padding: 14px;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      background: #fafafa;
+    }
+
+    .q h3 {
+      margin: 0 0 10px 0;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 999px;
+      background: #f1f1f1;
+      font-size: 12px;
+      margin-right: 6px;
+    }
+
+    pre {
+      border-radius: 12px;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    .small {
+      color: #333;
+      font-size: 14px;
+    }
+
+    .hint {
+      color: #444;
+      margin: 10px 0 0 0;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Java Backend Mülakat Rehberi (Junior Developer) — 40 Soru (3 Parça)</h1>
+  <p class="small">
+    Dili: Türkçe. Teknik terimler: English. Cümleler kısa. Junior seviyeye göre sıfırdan anlatım var.
+    Kodlar renkli görünür ve bol comment içerir.
+  </p>
+
+  <!-- ========================= PART 1 ========================= -->
+  <div class="part">
+    <h2>Part 1 / 3 — 1’den 19’a (Core Java + Concurrency + Spring + Spring Boot)</h2>
+
+    <!-- Q1 -->
+    <div class="q">
+      <h3><span class="tag">Soru 1</span> ConcurrentHashMap içinde Thread Safety nasıl sağlanır?</h3>
+
+      <p>
+        Önce hedefi net anlatalım: Aynı anda birden fazla thread map’e yazarsa değerler bozulmamalı.
+        ConcurrentHashMap bunu <b>lock</b> mantığıyla yapar ama her şeyi tek kilitlemez.
+      </p>
+
+      <p>
+        Mantık şudur: Map genelde parçalar halinde çalışır. Her parça için ayrı synchronization vardır.
+        Böylece farklı bucket’lar aynı anda değiştirilebilir.
+      </p>
+
+      <p>
+        Java 8+ tarafında bazı işlemler için <b>CAS</b> gibi atomic yöntemler kullanılır.
+        Bu da “kilit bekleme” süresini azaltır.
+      </p>
+
+      <p>
+        Ayrıca ConcurrentHashMap, <b>null key</b> ve <b>null value</b> kabul etmez.
+        Çünkü null’lı eşzamanlı davranışları hata üretir ve atomik mantığı karıştırır.
+      </p>
+
+      <pre><code class="language-java">// Amaç: Aynı map üzerinde farklı thread'ler güvenli şekilde update yapsın.
+// ConcurrentHashMap bunun için tasarlanmıştır.
+import java.util.concurrent.ConcurrentHashMap;
+
+public class ConcurrentHashMapDemo {
+
+  public static void main(String[] args) {
+    ConcurrentHashMap&lt;String, Integer&gt; map = new ConcurrentHashMap&lt;&gt;();
+
+    // putIfAbsent: atomik şekilde "yoksa ekle" yapar.
+    map.putIfAbsent("count", 0);
+
+    // compute: key mevcutsa hesaplar, değilse yeni değer üretir.
+    // Bu işlem tek bir atomic adım gibi düşünülür.
+    map.compute("count", (k, v) -&gt; v + 1);
+
+    System.out.println(map.get("count"));
+  }
+}</code></pre>
+
+      <p class="hint">
+        Junior ipucu: “Concurrent” kelimesi “her şey kilitlendi” demek değildir.
+        Daha akıllı bölme + atomic operasyon demektir.
+      </p>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q">
+      <h3><span class="tag">Soru 2</span> Prod ortamında hata artışı olunca Root Cause nasıl bulunur?</h3>
+
+      <p>
+        Root Cause bulmak “tahmin yürütme” değildir. Sıralı bir inceleme yaparsın.
+        İlk hedef: sorunun nerede patladığını bulmaktır.
+      </p>
+
+      <p>
+        Önce <b>impact</b> ölçersin: Error rate arttı mı?
+        Latency arttı mı?
+        Hangi endpoint’ler etkilendi?
+      </p>
+
+      <p>
+        Sonra <b>distributed tracing</b> bakarsın.
+        Trace’de hangi span yavaşladı hemen görülür.
+        DB mi yavaşladı, cache mi, external servis mi?
+      </p>
+
+      <p>
+        Sonra <b>logs</b> ile doğrularsın.
+        Hangi hata tipi büyüdü?
+        Retry var mı?
+        Connection pool exhaustion var mı?
+      </p>
+
+      <p>
+        En son karar: quick mitigation.
+        Gerekirse rollback veya feature flag kapatma yaparsın.
+        Sonra kalıcı fix için deploy edersin.
+      </p>
+
+      <pre><code class="language-java">// Bu kod "konsept" içindir.
+// Gerçek hayatta bu kontrol akışı Observability araçlarından gelir.
+public class IncidentRunbook {
+
+  public void run() {
+    // 1) Check metrics
+    // - error rate
+    // - p95/p99 latency
+    // - throughput
+    // - CPU/memory/thread count
+
+    // 2) Check traces
+    // - slowest span
+    // - DB/cache/external dependency sıralaması
+
+    // 3) Check logs
+    // - stack trace türleri
+    // - retry storm işaretleri
+    // - connection pool limit aşımları
+
+    // 4) Decide mitigation
+    // - rollback
+    // - feature flag
+    // - rate limit değişikliği
+
+    // 5) Validate after fix
+    // - metrics düştü mü?
+    // - traces normale döndü mü?
+  }
+}</code></pre>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q">
+      <h3><span class="tag">Soru 3</span> wait(), sleep(), join() farkları nelerdir?</h3>
+
+      <p>
+        Bu üçü “bekleme” gibi görünür ama mekanizması farklıdır.
+        Aradaki farkı bilmek thread bug’larını azaltır.
+      </p>
+
+      <p>
+        <b>wait()</b> bir <b>monitor</b> işlemidir.
+        Thread, ilgili lock’u bırakır.
+        Sonra ya <b>notify/notifyAll</b> gelene kadar bekler,
+        ya da timeout biter.
+      </p>
+
+      <p>
+        <b>sleep()</b> lock’u bırakmaz.
+        Thread sadece belirli süre “uyur”.
+        Bu süre dolunca tekrar çalışmaya döner.
+      </p>
+
+      <p>
+        <b>join()</b> ise başka bir thread bitene kadar bekler.
+        Yani “benim threadim sen bitene kadar dur” der.
+      </p>
+
+      <pre><code class="language-java">// wait() ve notify() ile doğru kullanım örneği
+final Object monitor = new Object();
+
+Thread consumer = new Thread(() -&gt; {
+  synchronized (monitor) {
+    try {
+      // wait: lock'u bırakır
+      monitor.wait(1000); // notify gelmezse 1 sn sonra uyanır
+      // Buraya notify veya timeout sonrası gelinir
+    } catch (InterruptedException e) {
+      // interrupt handle
+    }
+  }
+});
+
+Thread producer = new Thread(() -&gt; {
+  synchronized (monitor) {
+    // Üretim yap (pseudo)
+    // ...
+
+    // notify: consumer'ı uyandır
+    monitor.notify();
+  }
+});
+
+consumer.start();
+producer.start();</code></pre>
+
+      <pre><code class="language-java">// sleep() örneği: lock'u bırakmaz
+Object lock = new Object();
+
+Thread t = new Thread(() -&gt; {
+  synchronized (lock) {
+    try {
+      // sleep: lock halen tutuluyor (diğer thread'ler lock'u alamaz)
+      Thread.sleep(500);
+    } catch (InterruptedException ignored) {}
+  }
+});
+
+t.start();</code></pre>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q">
+      <h3><span class="tag">Soru 4</span> inner class ve static nested class farkı nedir?</h3>
+
+      <p>
+        Önce şunu düşün: Non-static inner class, dış class’ın instance’ına bağlıdır.
+        Bu yüzden dış sınıf referansını taşır.
+      </p>
+
+      <p>
+        Static nested class ise dış instance’a bağlı değildir.
+        Sadece dış class’ın <b>static</b> üyelerini kullanabilir.
+      </p>
+
+      <p>
+        Bu fark memory ve erişim yetkisini etkiler.
+        Bu yüzden doğru türü seçmek önemlidir.
+      </p>
+
+      <pre><code class="language-java">class Outer {
+  private int x = 10;
+
+  // Non-static inner class: Outer instance'a bağlıdır
+  class Inner {
+    int getX() {
+      // Outer.x'e ulaşabilir
+      return x;
+    }
+  }
+
+  // Static nested class: Outer instance'a bağlı değil
+  static class StaticInner {
+    // int getX() { return x; } // Bu derlenmez: x static değil
+  }
+}</code></pre>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q">
+      <h3><span class="tag">Soru 5</span> equals() ve == farkı nedir?</h3>
+
+      <p>
+        Java’da iki farklı “eşitlik” kavramı var: referans eşitliği ve mantıksal eşitlik.
+      </p>
+
+      <p>
+        <b>==</b> referans karşılaştırır.
+        Yani iki değişken aynı nesneyi mi gösteriyor?
+      </p>
+
+      <p>
+        <b>equals()</b> mantıksal karşılaştırmadır.
+        İki nesnenin içeriği aynı mı?
+      </p>
+
+      <p>
+        equals() override ediyorsan, <b>hashCode()</b> de tutarlı olmalıdır.
+        Çünkü HashMap/HashSet equals + hashCode birlikte çalışır.
+      </p>
+
+      <pre><code class="language-java">import java.util.Objects;
+
+class User {
+  private final String email;
+
+  User(String email) {
+    this.email = email;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    // 1) Aynı referans => aynı nesne
+    if (this == o) return true;
+
+    // 2) Tür kontrolü
+    if (!(o instanceof User other)) return false;
+
+    // 3) Mantıksal eşitlik: email aynı mı?
+    return Objects.equals(this.email, other.email);
+  }
+
+  @Override
+  public int hashCode() {
+    // equals'te hangi alanı kullanıyorsan hashCode'ta da aynı alan olmalı.
+    return Objects.hash(email);
+  }
+}</code></pre>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q">
+      <h3><span class="tag">Soru 6</span> hashCode() neden equals() ile birlikte override edilir?</h3>
+
+      <p>
+        Hash tabanlı koleksiyonlar önce hashCode hesaplar.
+        Sonra aynı hash’li bucket içinde equals() dener.
+      </p>
+
+      <p>
+        Eğer hashCode tutarsızsa, aynı mantıksal eleman başka bucket’a düşer.
+        Sonra HashMap “böyle bir anahtar yok” gibi davranabilir.
+      </p>
+
+      <p>
+        Bu yüzden equals() değişince hashCode() da aynı mantıkla güncellenmelidir.
+        Bu kural “contract” gibi düşün.
+      </p>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q">
+      <h3><span class="tag">Soru 7</span> immutable kavramını açıkla.</h3>
+
+      <p>
+        Immutable demek: nesnenin durumu değişmez.
+        Yani oluşturduktan sonra field’lar değişmez.
+      </p>
+
+      <p>
+        Bu genelde <b>final</b> alanlar ve kopya alma ile yapılır.
+        Eğer mutable bir obje dışarıdan alınıyorsa, onu da kopyalarsın.
+      </p>
+
+      <p>
+        Immutable nesneler thread-safety açısından çok kolaydır.
+        Çünkü başka thread “durumu bozamaz”.
+      </p>
+
+      <pre><code class="language-java">import java.util.List;
+
+final class ImmutableUser {
+  private final String name;
+
+  // Eğer roles listesi dışarıdan gelirse,
+  // dışarıdan değişebilir. Bu yüzden kopya alırız.
+  private final List&lt;String&gt; roles;
+
+  ImmutableUser(String name, List&lt;String&gt; roles) {
+    this.name = name;
+
+    // List.copyOf: yeni bir immutable görünüm döndürür
+    this.roles = List.copyOf(roles);
+  }
+
+  public String getName() { return name; }
+  public List&lt;String&gt; getRoles() { return roles; } // artık risksiz
+}</code></pre>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q">
+      <h3><span class="tag">Soru 8</span> Thread pool nedir? Executors neden kullanılır?</h3>
+
+      <p>
+        Thread pool, thread’leri “hazır bekletme” fikridir.
+        Yeni her iş için yeni thread açmak pahalıdır.
+      </p>
+
+      <p>
+        Thread pool ile thread’ler yeniden kullanılır.
+        Bu sayede CPU boşa gitmez.
+      </p>
+
+      <p>
+        Executors, thread pool oluşturmayı kolaylaştırır.
+        ayrıca yönetimi (shutdown gibi) düzgün yapmana yardım eder.
+      </p>
+
+      <pre><code class="language-java">import java.util.concurrent.*;
+
+public class ThreadPoolDemo {
+
+  public static void main(String[] args) throws Exception {
+    // 4 worker thread: aynı anda en fazla 4 task çalışır.
+    ExecutorService pool = Executors.newFixedThreadPool(4);
+
+    // submit: sonucu istiyorsan Future döndürür.
+    Future&lt;Integer&gt; future = pool.submit(() -&gt; {
+      // Buraya IO/DB işin gelebilir.
+      // Task biterse result dönmeli.
+      return 42;
+    });
+
+    // Future bitene kadar bekler.
+    // Production'da bunu kör şekilde yapmak yerine async akış tercih edilir.
+    System.out.println("Result = " + future.get());
+
+    // Düzgün kapatma: yeni task almayı durdur.
+    pool.shutdown();
+  }
+}</code></pre>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q">
+      <h3><span class="tag">Soru 9</span> CompletableFuture ile async akış nasıl kurulur?</h3>
+
+      <p>
+        CompletableFuture, “gelecek zamanı” temsil eder.
+        Yani sonucu henüz yoktur ama sonra gelecek.
+      </p>
+
+      <p>
+        supplyAsync ile bir değer üretirsin.
+        thenApply ile o değeri dönüştürürsün.
+        thenAccept ile değerle işlem yaparsın ama yeni değer döndürmez.
+      </p>
+
+      <p>
+        Async yaparken mutlaka executor kullanabilirsin.
+        Böylece hangi thread havuzunda çalıştığını kontrol edersin.
+      </p>
+
+      <pre><code class="language-java">import java.util.concurrent.*;
+
+public class CompletableFutureDemo {
+
+  public static void main(String[] args) {
+    ExecutorService exec = Executors.newFixedThreadPool(4);
+
+    CompletableFuture&lt;String&gt; f =
+        CompletableFuture.supplyAsync(() -&gt; {
+          // Örnek: dış servis çağrısı veya DB okuma
+          return "hello";
+        }, exec)
+        .thenApply(s -&gt; {
+          // Değeri dönüştür
+          return s.toUpperCase();
+        });
+
+    // Sonucu kullanan action
+    f.thenAccept(result -&gt; System.out.println("Final = " + result));
+
+    // Demo bitmeden program kapanmasın diye basit bekleme:
+    // (Gerçek projede doğru lifecycle/shutdown yönetimi yap.)
+    exec.shutdown();
+  }
+}</code></pre>
+
+      <p class="hint">
+        Junior ipucu: async zinciri kurarken hata akışı için exceptionally/handle da ekleyebilirsin.
+      </p>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q">
+      <h3><span class="tag">Soru 10</span> Java Garbage Collection nasıl çalışır? Minor/Major farkı nedir?</h3>
+
+      <p>
+        Java’da bellek yönetimi GC (Garbage Collection) ile yapılır.
+        GC’nin hedefi: kullanılmayan nesneleri temizlemek.
+      </p>
+
+      <p>
+        Heap genelde bölgelere ayrılır.
+        Young generation ve Old/Tenured generation gibi.
+      </p>
+
+      <p>
+        <b>Minor GC</b> çoğu zaman Young üzerinde çalışır.
+        Çünkü yeni nesneler genelde önce burada yaşar.
+      </p>
+
+      <p>
+        <b>Major/Full GC</b> Old generation üzerinde çalışır.
+        Daha ağırdır.
+        Bu yüzden daha uzun duraklama (pause) yaratabilir.
+      </p>
+
+      <p>
+        Modern GC’lerde (örn. G1) “regions” mantığı vardır.
+        Ama mülakat için ana fikir: young daha sık, old daha pahalıdır.
+      </p>
+    </div>
+
+    <!-- Q11 -->
+    <div class="q">
+      <h3><span class="tag">Soru 11</span> Spring Bean lifecycle adımlarını özetler misin?</h3>
+
+      <p>
+        Spring konteyneri bir Bean oluşturunca bir süreçten geçer.
+        Bu süreç “lifecycle” olarak bilinir.
+      </p>
+
+      <p>
+        Genel akış: Bean instantiation olur.
+        Sonra dependency injection yapılır.
+      </p>
+
+      <p>
+        Sonra aware callback’ler (isteğe bağlı) çalışır.
+        Daha sonra BeanPostProcessor’lar devreye girer.
+      </p>
+
+      <p>
+        init aşaması çalışır.
+        Örneğin @PostConstruct metodun çağrılır.
+        Son olarak uygulama request almaya hazır olur.
+      </p>
+
+      <p>
+        Context kapanınca destroy aşaması çalışır.
+        Örneğin @PreDestroy ile cleanup yapılır.
+      </p>
+
+      <pre><code class="language-java">import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import org.springframework.stereotype.Component;
+
+@Component
+public class LifecycleBean {
+
+  @PostConstruct
+  public void init() {
+    // Bean hazır olduğunda bir kez çalışır.
+    // Örn: cache warm-up, bağlantı hazırlığı.
+    System.out.println("init called");
+  }
+
+  @PreDestroy
+  public void destroy() {
+    // Application kapanırken cleanup olur.
+    // Örn: thread pool kapat, resource release.
+    System.out.println("destroy called");
+  }
+}</code></pre>
+    </div>
+
+    <!-- Q12 -->
+    <div class="q">
+      <h3><span class="tag">Soru 12</span> @Component, @Service, @Repository farkı nedir?</h3>
+
+      <p>
+        Bunların hepsi Spring tarafından component scan ile bulunabilir.
+        Hepsi Bean oluşturur.
+      </p>
+
+      <p>
+        Fark daha çok “semantic intent” tarafındadır.
+        @Service: iş (business logic) için.
+        @Repository: veri erişimi için.
+      </p>
+
+      <p>
+        @Repository genelde exception translate gibi ek davranışlar sağlayabilir.
+        Yani persistence layer hatalarını daha Spring-friendly hale getirebilir.
+      </p>
+
+      <p>
+        Junior için kısa kural: “Bana ait katmanı anlatmak için doğru annotation’ı seç.”
+      </p>
+    </div>
+
+    <!-- Q13 -->
+    <div class="q">
+      <h3><span class="tag">Soru 13</span> Dependency Injection (DI) neden önemlidir?</h3>
+
+      <p>
+        DI, sınıfları birbirine sıkı bağlamamayı sağlar.
+        Yani “new ile bağımlılık yaratma” yerine Spring bunu senin adına inject eder.
+      </p>
+
+      <p>
+        Bu sayede test daha kolay olur.
+        Çünkü mock veya stub verip davranışı kontrol edebilirsin.
+      </p>
+
+      <p>
+        DI ayrıca code’un değişime dayanıklı olmasına yardım eder.
+        Örneğin bir PaymentClient’i başka implementasyonla değiştirmek kolaylaşır.
+      </p>
+    </div>
+
+    <!-- Q14 -->
+    <div class="q">
+      <h3><span class="tag">Soru 14</span> Constructor injection vs Field injection farkı nedir?</h3>
+
+      <p>
+        Constructor injection önerilir.
+        Çünkü bağımlılıklar açıkça görünür.
+      </p>
+
+      <p>
+        Constructor injection ile class oluşturulurken dependency zaten garanti gelir.
+        Böylece null hataları daha erken yakalanır.
+      </p>
+
+      <p>
+        Field injection’da bağımlılık dışarıdan set edilir.
+        Testte bunu yapmak bazen daha zor olur.
+        Ayrıca final field kullanamazsın.
+      </p>
+
+      <pre><code class="language-java">import org.springframework.stereotype.Service;
+
+@Service
+public class OrderService {
+
+  private final PaymentClient paymentClient;
+
+  // Constructor injection
+  public OrderService(PaymentClient paymentClient) {
+    // paymentClient null gelirse bu testte/başlangıçta hemen anlaşılır.
+    this.paymentClient = paymentClient;
+  }
+
+  // business methods...
+}</code></pre>
+    </div>
+
+    <!-- Q15 -->
+    <div class="q">
+      <h3><span class="tag">Soru 15</span> Spring @Transactional nasıl çalışır?</h3>
+
+      <p>
+        @Transactional bir transaction boundary oluşturur.
+        Bunu genelde proxy + AOP ile yapar.
+      </p>
+
+      <p>
+        Yani Spring senin class’ını sarmalar.
+        Transaction gerektiren method proxy üzerinden çağrılınca transaction başlatılır.
+      </p>
+
+      <p>
+        Self-invocation problemi vardır.
+        Aynı class içinde method A, method B’yi direkt çağırırsa proxy devreye girmeyebilir.
+      </p>
+
+      <p>
+        Bu yüzden transactional method’ların tasarımı önemlidir.
+        Kural: “Transaction boundary dışarıdan gelen çağrı ile çalışır.”
+      </p>
+
+      <pre><code class="language-java">import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+public class BillingService {
+
+  @Transactional
+  public void charge() {
+    // Burada DB işlemleri yapılır.
+    // Hata olursa default olarak rollback tetiklenebilir (runtime exception).
+  }
+}</code></pre>
+    </div>
+
+    <!-- Q16 -->
+    <div class="q">
+      <h3><span class="tag">Soru 16</span> Propagation türleri ne işe yarar?</h3>
+
+      <p>
+        Transaction propagation, “zaten bir transaction var mı?” sorusuna göre davranışı belirler.
+      </p>
+
+      <p>
+        Örneğin <b>REQUIRED</b> genelde varsayılandır.
+        Zaten transaction varsa devam eder.
+        Yoksa yeni başlatır.
+      </p>
+
+      <p>
+        <b>REQUIRES_NEW</b> her zaman yeni transaction açar.
+        Dıştaki transaction etkilenmez.
+      </p>
+
+      <p>
+        <b>NESTED</b> ise nested transaction mantığına dayanabilir ama DB ve platforma göre davranış değişebilir.
+        Mülakatta ana fikir: “iç işlem dış transaction’ı etkiler mi, etkilemez mi?”
+      </p>
+    </div>
+
+    <!-- Q17 -->
+    <div class="q">
+      <h3><span class="tag">Soru 17</span> Isolation level neden önemli?</h3>
+
+      <p>
+        Isolation level, transaction’ların birbirlerini ne kadar “izole” ettiğini söyler.
+      </p>
+
+      <p>
+        Örneğin dirty read gibi problemler isolation seviyesine göre değişir.
+        Daha yüksek isolation genelde daha tutarlıdır.
+      </p>
+
+      <p>
+        Ama daha yüksek isolation genelde daha fazla lock demektir.
+        Bu da daha düşük throughput ve daha yavaş sistem anlamına gelebilir.
+      </p>
+
+      <p>
+        Junior için: “Tutarlılık ↔ Performans” trade-off’u var.
+        Proje için doğru seviyeyi seçmek gerekir.
+      </p>
+    </div>
+
+    <!-- Q18 -->
+    <div class="q">
+      <h3><span class="tag">Soru 18</span> Spring Boot Actuator ne sağlar?</h3>
+
+      <p>
+        Actuator, application’ın sağlık durumunu (health) ve metriklerini (metrics) dışarı açar.
+        Production’da bu çok değerlidir.
+      </p>
+
+      <p>
+        Örnek endpoint’ler: health, metrics, env, loggers gibi.
+        Ayrıca bazı sürümlerde thread dump veya info gibi endpoint’ler olabilir.
+      </p>
+
+      <p>
+        Amaç: “Sistem yaşıyor mu?”
+        “Yavaş mı çalışıyor?”
+        “Hangi config değerleri aktif?”
+      </p>
+    </div>
+
+    <!-- Q19 -->
+    <div class="q">
+      <h3><span class="tag">Soru 19</span> Spring Boot’ta configuration nasıl yönetilir? (profiles)</h3>
+
+      <p>
+        Profiles, ortam (environment) farklarına göre farklı configuration seçmeni sağlar.
+        Örn: dev, test, prod.
+      </p>
+
+      <p>
+        application-dev.yml ve application-prod.yml gibi dosyalar kullanabilirsin.
+        Böylece aynı kod farklı env’de farklı DB’ye bağlanır.
+      </p>
+
+      <p>
+        Ayrıca secret’ler code’un içinde olmamalı.
+        Genelde environment variables veya secret manager kullanılır.
+      </p>
+
+      <pre><code class="language-java">// application-prod.yml mantıksal örnek
+// (Gerçek dosya YAML formatında olur, burada fikir göstermek için yazıyorum.)
+spring:
+  datasource:
+    url: jdbc:postgresql://prod-db:5432/app
+    username: ${DB_USER}
+    password: ${DB_PASSWORD} // secret code'a gömülü değil</code></pre>
+    </div>
+  </div>
+
+  <!-- ========================= PART 2 ========================= -->
+  <div class="part">
+    <h2>Part 2 / 3 — 20’den 29’a (JPA + Hibernate + Sistem Tasarımı)</h2>
+
+    <!-- Q20 -->
+    <div class="q">
+      <h3><span class="tag">Soru 20</span> JPA entity lifecycle adımları nelerdir?</h3>
+
+      <p>
+        JPA entity’lerin yaşam döngüsünde birkaç durum vardır.
+        Bu durumlar “entity persistence context içinde mi?” sorusunu anlatır.
+      </p>
+
+      <p>
+        <b>New (transient)</b>: Entity henüz DB’ye kaydedilmemiştir.
+        Hibernate bunu takip etmeyebilir.
+      </p>
+
+      <p>
+        <b>Managed</b>: Persist eder veya repository save yaparsın.
+        Persistence context entity’yi takip eder.
+      </p>
+
+      <p>
+        Managed iken değişiklik yaparsan, transaction commit olunca DB’ye yansır.
+        Yani genelde “dirty checking” çalışır.
+      </p>
+
+      <p>
+        <b>Detached</b>: Persistence context entity’yi artık takip etmez.
+        Tekrar merge edilirse managed olur.
+      </p>
+
+      <p>
+        <b>Removed</b>: Remove ile entity silinmeye aday olur.
+      </p>
+    </div>
+
+    <!-- Q21 -->
+    <div class="q">
+      <h3><span class="tag">Soru 21</span> Optimistic Locking vs Pessimistic Locking (JPA)</h3>
+
+      <p>
+        Optimistic locking “çakışma nadir olur” fikrine dayanır.
+        Yani önce çalışırsın, sonra çakışma var mı kontrol edersin.
+      </p>
+
+      <p>
+        JPA’da bu genelde <b>@Version</b> ile olur.
+        İki transaction aynı row’u güncellerse biri commit’te “version değişti” hatası alabilir.
+      </p>
+
+      <p>
+        Pessimistic locking “çakışma sık olur” fikrine dayanır.
+        DB lock alırsın.
+        Diğer transaction’lar bekler.
+      </p>
+
+      <p>
+        Sonuç: Optimistic genelde daha az lock maliyeti.
+        Pessimistic daha güçlü tutarlılık ama deadlock riski ve throughput düşüş olabilir.
+      </p>
+
+      <pre><code class="language-java">import jakarta.persistence.*;
+
+@Entity
+public class InventoryItem {
+
+  @Id
+  private Long id;
+
+  // Optimistic locking counter
+  @Version
+  private Long version;
+
+  private int quantity;
+}</code></pre>
+    </div>
+
+    <!-- Q22 -->
+    <div class="q">
+      <h3><span class="tag">Soru 22</span> N+1 problem nedir? Nasıl önlenir?</h3>
+
+      <p>
+        N+1 demek şudur:
+        Bir tane sorgu ile ana listeyi alırsın.
+        Sonra her satır için ekstra sorgu çalışır.
+      </p>
+
+      <p>
+        Örnek: 1 sorgu ile 10 order alırsın.
+        Sonra her order için items almak istersen toplam 11 sorgu çıkar.
+      </p>
+
+      <p>
+        Bu performansı öldürür.
+        Çünkü round-trip artar.
+      </p>
+
+      <p>
+        Çözüm: fetch join ile ilişkileri beraber çekmek.
+        EntityGraph kullanmak.
+        Doğru fetch type (LAZY/EAGER) seçmek.
+        Bazen batch fetching de yardımcı olur.
+      </p>
+
+      <pre><code class="language-java">// Fetch Join ile N+1'i azaltma
+// JPQL: Order + items beraber gelir.
+@Query("SELECT o FROM Order o JOIN FETCH o.items WHERE o.customerId = :id")
+List&lt;Order&gt; findOrdersWithItems(@Param("id") Long customerId);</code></pre>
+    </div>
+
+    <!-- Q23 -->
+    <div class="q">
+      <h3><span class="tag">Soru 23</span> Hibernate get() vs load() farkı</h3>
+
+      <p>
+        get() genelde “hemen sorgula ve sonucu dön” mantığındadır.
+        Entity varsa döner.
+        Yoksa null döner.
+      </p>
+
+      <p>
+        load() ise genelde “lazy proxy oluştur” mantığındadır.
+        Sadece proxy döndürebilir.
+        Gerçek data erişilince sorgu olur.
+      </p>
+
+      <p>
+        Eğer entity yoksa load çağırınca genelde hemen değil,
+        erişim anında hata fırlatılabilir (ör. EntityNotFoundException).
+      </p>
+    </div>
+
+    <!-- Q24 -->
+    <div class="q">
+      <h3><span class="tag">Soru 24</span> Cascade türleri (CascadeType) ne işe yarar?</h3>
+
+      <p>
+        Cascade, parent entity üzerinde bir operation yapılınca child’a da aynı işlemi uygular.
+      </p>
+
+      <p>
+        Örnek: Parent persist edilirse child persist de olsun istersin.
+        Ya da parent remove edilirse child da silinsin istersin.
+      </p>
+
+      <p>
+        Burada kritik nokta: Cascade yanlış kullanılırsa çok tehlikeli olur.
+        Beklenmedik delete veya update tetiklenebilir.
+      </p>
+
+      <pre><code class="language-java">// Parent kaydedilince child da kaydedilsin
+import jakarta.persistence.*;
+import java.util.List;
+
+@Entity
+public class Parent {
+  @Id
+  private Long id;
+
+  @OneToMany(cascade = CascadeType.PERSIST)
+  private List&lt;Child&gt; children;
+}</code></pre>
+    </div>
+
+    <!-- Q25 -->
+    <div class="q">
+      <h3><span class="tag">Soru 25</span> E-Commerce Order Tracking System tasarla</h3>
+
+      <p>
+        Hedef: order durumunu doğru ve tutarlı şekilde göstermek.
+        Kullanıcı “ödeme alındı mı?” “kargoya verildi mi?” görebilmeli.
+      </p>
+
+      <p>
+        Event-driven yaklaşım burada çok iyi çalışır.
+        Örn: OrderCreated, PaymentCaptured, Shipped, Delivered.
+      </p>
+
+      <p>
+        Her event geldiğinde order’ın state’i değişir.
+        Ayrıca bir “status history” tablosu tutarsın.
+        Böylece geçmişi görmek kolay olur.
+      </p>
+
+      <p>
+        Dış servis (shipping provider gibi) için adapter kullanırsın.
+        Event’leri idempotent şekilde işler ve duplicate event’leri güvenle yutarsın.
+      </p>
+
+      <pre><code class="language-java">// İdeal fikir: Event'i state machine gibi uygula.
+// Pseudocode: eventType geldiğinde status değişsin.
+enum OrderStatus { CREATED, RESERVED, PAID, SHIPPED, DELIVERED, CANCELED }
+
+class OrderState {
+  private OrderStatus status = OrderStatus.CREATED;
+
+  public void apply(String eventType) {
+    switch (eventType) {
+      case "OrderCreated" -&gt; status = OrderStatus.CREATED;
+      case "PaymentCaptured" -&gt; status = OrderStatus.PAID;
+      case "Shipped" -&gt; status = OrderStatus.SHIPPED;
+      case "Delivered" -&gt; status = OrderStatus.DELIVERED;
+      default -&gt; {
+        // İlgisiz event'i ignore et
+      }
+    }
+  }
+}</code></pre>
+    </div>
+
+    <!-- Q26 -->
+    <div class="q">
+      <h3><span class="tag">Soru 26</span> Distributed Rate Limiter tasarla</h3>
+
+      <p>
+        Rate limiter, bir API’ye çok fazla istek gitmesini sınırlar.
+        Ama bunu tek node ile yaparsan ölçeklenmez.
+      </p>
+
+      <p>
+        Distributed ortamda state ortak olmalı.
+        En yaygın çözüm Redis kullanmaktır.
+      </p>
+
+      <p>
+        Token bucket veya sliding window gibi modeller vardır.
+        En kritik nokta atomikliktir.
+        Aynı anda birçok request gelince yanlış sayım olmasın.
+      </p>
+
+      <p>
+        Bu yüzden Redis’te atomic ops veya Lua script kullanılır.
+        Böylece “token kontrol et + token azalt” tek atomik adım olur.
+      </p>
+
+      <pre><code class="language-java">// Konsept: Token bucket mantığı.
+// Gerçek kod genelde Redis Lua ile yapılır.
+class RateLimiter {
+
+  // Burada token count ve refill policy olur.
+  // - token count
+  // - refill interval
+  // - max tokens
+  // - allow/deny atomic decision
+}</code></pre>
+    </div>
+
+    <!-- Q27 -->
+    <div class="q">
+      <h3><span class="tag">Soru 27</span> Design a URL Shortener</h3>
+
+      <p>
+        Shortener’ın temel görevi: uzun URL’yi kısa bir kod’a maplemek.
+      </p>
+
+      <p>
+        Bileşenler:
+        1) URL mapping tablosu (short_code -&gt; target_url)
+        2) Redirect endpoint (short_code al, target_url’ye yönlendir)
+        3) Cache (çok tekrar eden kodlar)
+        4) Analytics (tıklama sayısı)
+      </p>
+
+      <p>
+        short_code üretimi:
+        random veya counter + base62 kullanılır.
+        Çakışma olursa unique constraint ile yönetirsin.
+      </p>
+
+      <pre><code class="language-java">// Kısa code üretimi (random)
+// Not: Çakışma olasılığı var. DB unique constraint + retry ile yönet.
+import java.util.concurrent.ThreadLocalRandom;
+
+public class ShortCodeGenerator {
+  private static final String ALPHABET =
+      "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+  public static String generate(int len) {
+    StringBuilder sb = new StringBuilder(len);
+
+    for (int i = 0; i &lt; len; i++) {
+      int idx = ThreadLocalRandom.current().nextInt(ALPHABET.length());
+      sb.append(ALPHABET.charAt(idx));
+    }
+
+    return sb.toString();
+  }
+}</code></pre>
+    </div>
+
+    <!-- Q28 -->
+    <div class="q">
+      <h3><span class="tag">Soru 28</span> Redis benzeri Distributed Key-Value Store tasarla</h3>
+
+      <p>
+        Tasarımda temel başlıklar şunlardır:
+        data model, partitioning, replication, failover, consistency, eviction.
+      </p>
+
+      <p>
+        Partitioning için consistent hashing sık kullanılır.
+        Node değişince key’lerin yeniden dağıtımı daha az olur.
+      </p>
+
+      <p>
+        Replication için primary-backup ya da quorum yaklaşımı seçilir.
+        Tutarlılık ile performans trade-off olur.
+      </p>
+
+      <p>
+        Eviction: cache dolunca eski verileri temizleme politikası.
+        Consistency: okuma/yazma davranışı nasıl olacak?
+      </p>
+
+      <pre><code class="language-java">// Consistent hashing konsept örneği (pseudo)
+class ConsistentHashRing {
+
+  public String getNodeForKey(String key) {
+    // 1) key'i hash et
+    // 2) ring'de successor node bul
+    // 3) o node'u döndür
+    return "node-1"; // pseudo
+  }
+}</code></pre>
+    </div>
+
+    <!-- Q29 -->
+    <div class="q">
+      <h3><span class="tag">Soru 29</span> Distributed Transactions yerine ne zaman Eventual Consistency kullanırsın?
+      </h3>
+
+      <p>
+        Distributed transaction, çok pahalı ve zor olabilir.
+        Özellikle microservices sayısı arttıkça koordinasyon maliyeti büyür.
+      </p>
+
+      <p>
+        Eventual consistency kullanmak daha pratik olabilir.
+        Event-driven mimari ile durumlar “bir süre sonra” tutarlı hale gelir.
+      </p>
+
+      <p>
+        Bu yaklaşımda idempotency çok önemli.
+        Outbox pattern ile event kaybını azaltırsın.
+        DLQ ve retry ile hatalarda döngü kontrolü yaparsın.
+      </p>
+
+      <pre><code class="language-java">// Saga örneği: adımlar ve compensating işlemler
+class OrderSaga {
+
+  // Adım1: reserve inventory
+  // Adım2: charge payment
+  // Adım3: create invoice
+
+  // Eğer bir adım fail olursa:
+  // compensating step'ler çalışır.
+}</code></pre>
+    </div>
+  </div>
+
+  <!-- ========================= PART 3 ========================= -->
+  <div class="part">
+    <h2>Part 3 / 3 — 30’dan 40’a (İleri Seviye + Üretim Pratiği)</h2>
+
+    <!-- Q30 -->
+    <div class="q">
+      <h3><span class="tag">Soru 30</span> Synchronized vs volatile farkları nedir?</h3>
+
+      <p>
+        <b>volatile</b> daha çok visibility içindir.
+        Bir thread yazınca, diğer thread o değeri görür.
+      </p>
+
+      <p>
+        Ama volatile tek başına atomicity sağlamaz.
+        Örneğin i++ gibi işlemler atomic değildir.
+        Çünkü “read + compute + write” birden fazla adım içerir.
+      </p>
+
+      <p>
+        <b>synchronized</b> ise hem visibility hem mutual exclusion sağlar.
+        Yani aynı lock’u aynı anda iki thread alamaz.
+      </p>
+
+      <pre><code class="language-java">// Volatile örneği: basit flag için uygundur.
+class Flag {
+  private volatile boolean ready = false;
+
+  public void setReady() {
+    ready = true;
+  }
+
+  public boolean isReady() {
+    return ready;
+  }
+}</code></pre>
+    </div>
+
+    <!-- Q31 -->
+    <div class="q">
+      <h3><span class="tag">Soru 31</span> Memory leak nasıl yakalanır? Heap dump ne zaman alınır?</h3>
+
+      <p>
+        Memory leak genelde “uygulama normal çalışırken RAM artmaya devam ediyor” hissiyle anlaşılır.
+        CPU normal olabilir ama heap büyür.
+      </p>
+
+      <p>
+        Bu durumda heap dump alırsın.
+        Sonra MAT gibi araçlarla dominator tree incelersin.
+        En çok tutulan referanslar nereden geliyor görürsün.
+      </p>
+
+      <p>
+        Yaygın leak sebepleri:
+        limitsiz büyüyen static collection’lar,
+        cache yanlış kullanımı,
+        event listener’ların hiç temizlenmemesi.
+      </p>
+    </div>
+
+    <!-- Q32 -->
+    <div class="q">
+      <h3><span class="tag">Soru 32</span> Thread dump ile deadlock / contention nasıl anlaşılır?</h3>
+
+      <p>
+        Thread dump almak için genelde jstack kullanılır.
+        Amaç: thread’ler “hangi lock’u bekliyor” görmek.
+      </p>
+
+      <p>
+        Deadlock şüphesinde genelde birden fazla thread birbirinin kilidini bekler.
+        Thread dump’te “waiting for lock” zinciri görülür.
+      </p>
+
+      <p>
+        Contention şüphesinde de çok sayıda thread aynı lock için BLOCKED olabilir.
+        Bu da performansı düşürür.
+      </p>
+
+      <p>
+        Sonra kodda lock sıralamasını kontrol edersin.
+        Tutarsız lock order deadlock riskini artırır.
+      </p>
+    </div>
+
+    <!-- Q33 -->
+    <div class="q">
+      <h3><span class="tag">Soru 33</span> Idempotency (idempotency key) neden önemlidir?</h3>
+
+      <p>
+        Idempotency demek: Aynı isteği iki kez atsan bile sonuç değişmesin.
+      </p>
+
+      <p>
+        Distributed sistemlerde retry sık olur.
+        Network hata verdiğinde istemci tekrar gönderir.
+      </p>
+
+      <p>
+        Eğer idempotent değilsen, Payment gibi işlemler iki kez “charge” olabilir.
+        Bu ciddi problem.
+      </p>
+
+      <p>
+        Idempotency key ile:
+        aynı key tekrar gelirse aynı sonucu dönersin.
+        Yani “duplicate request” güvenle yönetilir.
+      </p>
+
+      <pre><code class="language-java">// Konsept: idempotency key ile sonucu cachele/record et.
+import java.util.concurrent.ConcurrentHashMap;
+
+class IdempotentPaymentStore {
+  private final ConcurrentHashMap&lt;String, String&gt; results = new ConcurrentHashMap&lt;&gt;();
+
+  public String pay(String idempotencyKey) {
+    // computeIfAbsent: key ilk kez gelirse işlem kaydı oluşturulur.
+    // ikinci kez gelirse aynı değer döner.
+    return results.computeIfAbsent(idempotencyKey, k -&gt; "PAID_OK");
+  }
+}</code></pre>
+    </div>
+
+    <!-- Q34 -->
+    <div class="q">
+      <h3><span class="tag">Soru 34</span> Distributed messaging’te DLQ nedir?</h3>
+
+      <p>
+        DLQ (Dead-Letter Queue) işlenemeyen mesajlar için ayrılmış bir kuyruğudur.
+      </p>
+
+      <p>
+        Normal consumer mesajı işler.
+        Ama mesaj sürekli hata veriyorsa retry sonsuza gidebilir.
+        Bu durum sistemi kilitler.
+      </p>
+
+      <p>
+        DLQ, belirli retry limitinden sonra mesajı “kenara alır”.
+        Böylece sistem devam eder.
+      </p>
+
+      <p>
+        Sonra DLQ’daki mesajlar manuel incelenir veya recovery worker ile yeniden işlenir.
+      </p>
+    </div>
+
+    <!-- Q35 -->
+    <div class="q">
+      <h3><span class="tag">Soru 35</span> Bulkhead pattern nedir? Neden kullanılır?</h3>
+
+      <p>
+        Bulkhead pattern, gemilerdeki bölmeler gibi düşünebilirsin.
+        Bir bölüm hasar görse diğerleri batmaz.
+      </p>
+
+      <p>
+        Backend’de bu, kaynakları ayırmaktır.
+        Örneğin thread pool’u her feature için ayırırsın.
+      </p>
+
+      <p>
+        Böylece bir endpoint yavaşladığında tüm sistemin thread’i dolmaz.
+        Sistem “kısmen çalışmaya” devam eder.
+      </p>
+
+      <p>
+        Bu yaklaşım özellikle production’da çok değerlidir.
+      </p>
+    </div>
+
+    <!-- Q36 -->
+    <div class="q">
+      <h3><span class="tag">Soru 36</span> Circuit breaker neden gerekir?</h3>
+
+      <p>
+        Circuit breaker, hatalı/slow bir dış servise sürekli istek atmayı durdurur.
+      </p>
+
+      <p>
+        Dış servis down veya çok yavaşsa sistem daha çok yüklenir.
+        Bu da “cascade failure” yapabilir.
+      </p>
+
+      <p>
+        Circuit breaker hataları izler.
+        Belirli eşiği geçince “OPEN” olur ve yeni istekleri kısa devre yapar.
+      </p>
+
+      <p>
+        Sonra “half-open” durumunda sınırlı deneme yapılır.
+        Servis toparlandıysa “close” edilir.
+      </p>
+
+      <pre><code class="language-java">// Konsept: Circuit breaker pseudo state machine
+class CircuitBreaker {
+  enum State { CLOSED, OPEN, HALF_OPEN }
+  private State state = State.CLOSED;
+
+  public boolean allowRequest() {
+    // OPEN iken istekleri reddet
+    return state != State.OPEN;
+  }
+
+  public void onSuccess() {
+    // Başarı gelirse circuit'i kapat
+    state = State.CLOSED;
+  }
+
+  public void onFailure() {
+    // Failure artarsa circuit'i aç
+    state = State.OPEN;
+  }
+}</code></pre>
+    </div>
+
+    <!-- Q37 -->
+    <div class="q">
+      <h3><span class="tag">Soru 37</span> Reliable retries ve timeouts mikroservislerde nasıl tasarlanır?</h3>
+
+      <p>
+        En önemli kural: timeout’suz retry yok.
+        Çünkü bağlantı asla dönmezse retry’ler request biriktirir.
+      </p>
+
+      <p>
+        Önce timeout kuralını koyarsın.
+        Connection timeout ve request timeout ayrıdır.
+        Sonra retry davranışı gelir.
+      </p>
+
+      <p>
+        Retry’i her hatada yapmazsın.
+        Sadece “retryable” hatalarda yaparsın.
+        Örn: bazı 5xx ve network hataları.
+      </p>
+
+      <p>
+        Exponential backoff kullanırsın.
+        Jitter eklersin.
+        Böylece retry storm olmaz.
+      </p>
+
+      <pre><code class="language-java">// Pseudo: retry politikasI
+class RetryPolicy {
+
+  public void runWithRetry(Runnable task) {
+    int maxAttempts = 3;
+
+    for (int attempt = 1; attempt &lt;= maxAttempts; attempt++) {
+      try {
+        task.run();
+        return; // başarılıysa çık
+      } catch (Exception ex) {
+
+        // Burada ex'in retryable olup olmadığını kontrol edersin.
+        boolean retryable = true; // örnek
+
+        if (!retryable || attempt == maxAttempts) {
+          throw ex;
+        }
+
+        // Exponential backoff: 100ms, 200ms, 400ms gibi
+        long baseMs = 100L;
+        long backoff = baseMs * (1L &lt;&lt; (attempt - 1));
+
+        // Jitter: aynı anda herkesin retry yapmasını engeller
+        long jitter = (long) (Math.random() * 50);
+
+        sleep(backoff + jitter);
+      }
+    }
+  }
+
+  private void sleep(long ms) {
+    try { Thread.sleep(ms); } catch (InterruptedException ignored) {}
+  }
+}</code></pre>
+    </div>
+
+    <!-- Q38 -->
+    <div class="q">
+      <h3><span class="tag">Soru 38</span> Servis geçici kapalıyken sipariş durumunu doğru tutmak nasıl yapılır?</h3>
+
+      <p>
+        Burada amaç: “tek servis down olunca tüm sistem bozulmasın”.
+      </p>
+
+      <p>
+        Asıl yaklaşım event-driven tasarımdır.
+        Servis down olsa bile mesaj kuyruğunda event bekleyebilir.
+      </p>
+
+      <p>
+        Kuyruk (message queue) varsa mesajlar birikir.
+        Servis geri gelince tüketilir.
+        Bu sayede sipariş durumu doğru şekilde ilerler.
+      </p>
+
+      <p>
+        Sürekli fail olan event’ler için DLQ kullanırsın.
+        Böylece sistem sonsuz döngüye girmez.
+      </p>
+
+      <p>
+        Ayrıca Saga ile compensating transactions düşünülür.
+        Yani bazı adımlar iptal edilir, state düzeltilir.
+      </p>
+    </div>
+
+    <!-- Q39 -->
+    <div class="q">
+      <h3><span class="tag">Soru 39</span> Spring Boot’ta sensitive configuration ve secrets nasıl güvenli saklanır?
+      </h3>
+
+      <p>
+        Kural: Secrets code içinde veya git’te tutulmaz.
+        Loglara da yazılmaz.
+      </p>
+
+      <p>
+        Production için environment-specific configuration kullanılır.
+        Örn prod’ta farklı DB şifresi.
+      </p>
+
+      <p>
+        Secret manager kullanmak idealdir.
+        (Cloud Secret Manager veya Vault gibi)
+      </p>
+
+      <p>
+        Ayrıca secret rotation yapılır.
+        Least-privilege ile sadece gerekli servislerin erişimi olur.
+      </p>
+
+      <pre><code class="language-java">// application.yml (konsept)
+spring:
+  datasource:
+    password: ${DB_PASSWORD} // değer env/secret manager'dan gelir
+
+// Log kuralı: secret'i hiç loglama.
+// Hata olursa stack trace içinde secret sızmasın diye dikkat et.</code></pre>
+    </div>
+
+    <!-- Q40 -->
+    <div class="q">
+      <h3><span class="tag">Soru 40</span> Deployment sonrası API latency aniden artarsa nasıl incelersin?</h3>
+
+      <p>
+        İlk adım: etkini ölç.
+        Hangi endpoint’te arttı?
+        Hangi request tipi etkilendi?
+      </p>
+
+      <p>
+        Sonra compare yaparsın: before vs after.
+        Error rate de arttı mı?
+        Throughput düştü mü?
+      </p>
+
+      <p>
+        Traces’e bakarsın.
+        Hangi dependency span’ı yavaşladı?
+        DB mi? Cache mi? External API mi?
+      </p>
+
+      <p>
+        Sonra DB tarafı:
+        query plan değişti mi?
+        index var mı?
+        yavaş query oluştu mu?
+      </p>
+
+      <p>
+        Connection pool tarafı:
+        pool exhaustion var mı?
+        thread’ler queue’da mı bekliyor?
+      </p>
+
+      <p>
+        JVM tarafı:
+        GC pause arttı mı?
+        thread dump’ta contention var mı?
+      </p>
+
+      <p>
+        Son olarak:
+        deployment değişikliklerini kontrol et.
+        Sonra gerekirse rollback yap.
+        Root cause’u düzelttikten sonra tekrar deploy et.
+      </p>
+
+      <pre><code class="language-java">// Incident investigation akışı (pseudo)
+class LatencyInvestigationPlan {
+  public void run() {
+    // 1) Metrics: error rate, p95/p99 latency, throughput, resource
+    // 2) Tracing: find slow span (DB/cache/external)
+    // 3) DB: slow queries, indexes, query plan
+    // 4) Connection pool: active/idle, wait time, exhaustion
+    // 5) JVM: GC logs, heap usage, thread dump contention
+    // 6) Config/dependency diff: what changed in deployment?
+    // 7) Mitigation: rollback if needed
+    // 8) Fix + redeploy + validate
+  }
+}</code></pre>
+    </div>
+  </div>
+
+</body>
+
+</html>
