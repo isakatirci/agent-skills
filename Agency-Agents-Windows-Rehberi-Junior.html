@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agency Agents Windows Rehberi - Junior Developer Sürümü</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+        
+        .content {
+            padding: 40px 30px;
+        }
+        
+        section {
+            margin-bottom: 45px;
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .info-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+        
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+            position: relative;
+        }
+        
+        .code-block::before {
+            content: attr(data-label);
+            display: block;
+            color: #858585;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #404040;
+        }
+        
+        .step {
+            background: #f9f9f9;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .step h4 {
+            display: inline-block;
+            color: #333;
+            margin: 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        tr:hover {
+            background: #f0f4ff;
+        }
+        
+        .agent-card {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .agent-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+        
+        .agent-card h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+        
+        .agent-card .bölüm {
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .agent-card .açıklama {
+            color: #555;
+            line-height: 1.5;
+        }
+        
+        .quick-ref {
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .quick-ref h4 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .quick-ref code {
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+        }
+        
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .checklist li {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f9f9f9;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .checklist li:before {
+            content: "✓";
+            display: inline-block;
+            color: #28a745;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        
+        .sidebar {
+            background: #f0f4ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .sidebar h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+        
+        .sidebar li {
+            margin: 8px 0;
+            color: #555;
+        }
+        
+        .sidebar li:before {
+            content: "→ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            color: #888;
+            font-size: 0.9em;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Agency Agents Windows Rehberi</h1>
+            <p>Junior Developer versiyonu - Pratik yaparak öğrenin</p>
+        </header>
+        
+        <div class="content">
+            <!-- KİŞİ REHBER BÖLÜMÜ -->
+            <section>
+                <h2>📌 Bu Rehber Kimler İçin?</h2>
+                <p>Eğer siz:</p>
+                <ul class="checklist">
+                    <li>Windows 10 veya 11 kullanıyorsanız</li>
+                    <li>Cursor, VSCode veya benzer bir editör kullanıyorsanız</li>
+                    <li>Yapay zeka ajanlarıyla çalışmak isterseniz</li>
+                    <li>GitHub'dan repoları klonlamayı biliyorsanız</li>
+                    <li>Komut satırı (PowerShell veya Git Bash) ile rahat oluyorsanız</li>
+                </ul>
+                <p style="margin-top: 20px;">Bu rehber sizin için yazılmıştır. 30 dakikada başlatıp, 4 pratik yapabilirsiniz.</p>
+            </section>
+
+            <!-- NEDIR BÖLÜMÜ -->
+            <section>
+                <h2>🤖 Agency Agents Nedir?</h2>
+                
+                <div class="info-box">
+                    <strong>Basit tanımı:</strong> Specialistler havuzu. Her uzman (Frontend Developer, Tasarımcı, Test Mühendisi, vb.) farklı bir işe odaklanır ve çalışma biçimi tanımlanmıştır.
+                </div>
+                
+                <p>Agency Agents, GitHub'da 279 tane yazılı yapay zeka uzmanıdır. Bunlar bot değildir - kurallardır. Cursor, VSCode veya başka araçlara "bu iş için bu uzman gibi düşün" diye söylediğiniz talimatlar.</p>
+                
+                <p><strong>Örnek:</strong> "Frontend Developer" kuralını Cursor'a taşırsanız, sohbet boyunca Claude (ya da seçtiğiniz AI) bu rolde devam eder. Arayüz kodu yazar, responsive tasarım yapar, en iyi uygulamaları takip eder.</p>
+                
+                <h3>Ajanlar Nasıl Organize Edilir?</h3>
+                <p>279 ajan, 18 bölüme ayrılmıştır:</p>
+                
+                <table>
+                    <tr>
+                        <th>Bölüm</th>
+                        <th>Ne İçin</th>
+                        <th>Örnek Ajanlar</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Engineering</strong></td>
+                        <td>Yazılım geliştirme</td>
+                        <td>Frontend Developer, Backend Developer, DevOps Engineer</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Design</strong></td>
+                        <td>Tasarım ve UX</td>
+                        <td>Whimsy Injector, UI Designer, UX Researcher</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Testing</strong></td>
+                        <td>Kalite kontrol</td>
+                        <td>Reality Checker, QA Engineer, Test Automator</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Security</strong></td>
+                        <td>Güvenlik denetimi</td>
+                        <td>Security Engineer, Penetration Tester</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Research</strong></td>
+                        <td>Kaynak araştırması</td>
+                        <td>Research Synthesist</td>
+                    </tr>
+                </table>
+                
+                <div class="warning-box">
+                    <strong>⚠️ Önemli:</strong> Tüm 279 ajanı birden kurmayın! Her ajanı yüklediğinizde Cursor'un bağlamı artar, cevaplar yavaşlar. Başlangıçta sadece 3-4 ajan kurun.
+                </div>
+            </section>
+
+            <!-- HAZIRLIK BÖLÜMÜ -->
+            <section>
+                <h2>📋 Başlamadan Önce Kontrol Listesi</h2>
+                
+                <h3>İhtiyacınız Olanlar:</h3>
+                <ul class="checklist">
+                    <li>Windows 10 veya 11</li>
+                    <li>Git for Windows (git-scm.com/download/win)</li>
+                    <li>Cursor (cursor.com) veya VSCode + Claude Extension</li>
+                    <li>Bir terminal: PowerShell, Git Bash, ya da CMD</li>
+                    <li>İnternet bağlantısı</li>
+                </ul>
+                
+                <h3>Sürümleri Kontrol Edin:</h3>
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <h4>Git'i Kontrol Etme</h4>
+                    <p>PowerShell'i açın ve yazın:</p>
+                    <div class="code-block" data-label="PowerShell">git --version</div>
+                    <p>Çıktı: <code>git version 2.42.0.windows.2</code> gibi bir satır görmelisiniz.</p>
+                    <div class="warning-box">Eğer "git komutu bulunamadı" hatası alırsanız, Git for Windows'u yükleyin.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <h4>Cursor'u Kurun veya Açın</h4>
+                    <p>Cursor uygulaması bilgisayarınızda kurulu ve çalışıyor mu kontrol edin.</p>
+                </div>
+            </section>
+
+            <!-- ADIM ADIM KURULUM -->
+            <section>
+                <h2>🔧 Adım Adım Kurulum (30 dakika)</h2>
+                
+                <h3>Adım 1: Repoyu Klonlama</h3>
+                <p>Agency Agents GitHub deposunu bilgisayarınıza kopyalayacağız.</p>
+                
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <h4>PowerShell'i Açın</h4>
+                    <p>Başlat menüsüne yazın: <code>PowerShell</code> (veya <code>Windows Terminal</code>)</p>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <h4>Kullanıcı Klasörüne Gidin</h4>
+                    <p>PowerShell'de yazın:</p>
+                    <div class="code-block" data-label="PowerShell">cd $env:USERPROFILE</div>
+                    <p>Bu komutu çalıştırdıktan sonra, klasör yolunuz <code>C:\Users\SizinAdınız</code> olur.</p>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <h4>Repoyu Klonlayın</h4>
+                    <p>PowerShell'de yazın:</p>
+                    <div class="code-block" data-label="PowerShell">git clone https://github.com/msitarzewski/agency-agents.git</div>
+                    <p>Bu işlem 1-2 dakika alacaktır. Tamamlandığında <code>agency-agents</code> klasörü oluşacaktır.</p>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <h4>Klonun Başarılı Olduğunu Kontrol Etme</h4>
+                    <p>PowerShell'de yazın:</p>
+                    <div class="code-block" data-label="PowerShell">cd agency-agents
+Get-ChildItem agents | Select-Object Name</div>
+                    <p><strong>Beklenen sonuç:</strong> 18 klasör adı görmelisiniz: <code>design, engineering, marketing, security, testing</code> vb.</p>
+                    <div class="success-box">
+                        Eğer 18 klasör görüyorsanız, klon başarılı olmuştur! Devam edin.
+                    </div>
+                </div>
+                
+                <h3>Adım 2: Pratik Klasörünü Oluşturma</h3>
+                <p>Ajanları kuracağınız ve projeleri yapacağınız ayrı bir klasör oluşturun.</p>
+                
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <h4>Pratik Klasörünü Oluşturun</h4>
+                    <p>PowerShell'de yazın:</p>
+                    <div class="code-block" data-label="PowerShell">cd $env:USERPROFILE
+mkdir ajan-pratik
+cd ajan-pratik</div>
+                    <p>Şimdi <code>C:\Users\SizinAdınız\ajan-pratik</code> klasöründe bulunuyorsunuz.</p>
+                </div>
+                
+                <h3>Adım 3: Üç Ajanı Kurma</h3>
+                <p>İlk olarak 3 ajanı kuracağız. Bunlar başlangıç için ideal:</p>
+                
+                <div class="agent-card">
+                    <h4>1. Frontend Developer</h4>
+                    <div class="bölüm">Bölüm: Engineering</div>
+                    <div class="açıklama">HTML, CSS, React, Vue gibi arayüz teknolojilerinde uzman. Responsive tasarım, erişilebilirlik (a11y) ve en iyi uygulamaları takip eder.</div>
+                </div>
+                
+                <div class="agent-card">
+                    <h4>2. Whimsy Injector</h4>
+                    <div class="bölüm">Bölüm: Design</div>
+                    <div class="açıklama">Tasarımınıza eğlenceli ve anlamlı dokunuşlar ekler. Sadece güzel değil, işlevsel de olur.</div>
+                </div>
+                
+                <div class="agent-card">
+                    <h4>3. Reality Checker</h4>
+                    <div class="bölüm">Bölüm: Testing</div>
+                    <div class="açıklama">Kodunuzun yayına hazır olup olmadığını kontrol eder. Hataları, güvenlik sorunlarını ve eksiklikleri tespit eder.</div>
+                </div>
+                
+                <h3>Kurulum Komutu</h3>
+                <p>ajan-pratik klasöründe iken şu komutu çalıştırın:</p>
+                
+                <div class="code-block" data-label="PowerShell">bash "$env:USERPROFILE/agency-agents/scripts/install.sh" --tool cursor --agent engineering-frontend-developer,design-whimsy-injector,testing-reality-checker</div>
+                
+                <div class="info-box">
+                    <strong>Bu komut neyi yapar?</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li><code>--tool cursor</code>: Ajanları Cursor formatında kurar</li>
+                        <li><code>--agent engineering-frontend-developer,...</code>: Üç ajanı belirtir</li>
+                        <li>Komut çalıştıktan sonra <code>.cursor/rules</code> klasörü oluşur</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <h4>Kurulum Başarılı Olduğunu Kontrol Etme</h4>
+                    <p>PowerShell'de yazın:</p>
+                    <div class="code-block" data-label="PowerShell">Get-ChildItem .cursor\rules</div>
+                    <p><strong>Beklenen sonuç:</strong> Üç dosya görmelisiniz:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><code>engineering-frontend-developer.mdc</code></li>
+                        <li><code>design-whimsy-injector.mdc</code></li>
+                        <li><code>testing-reality-checker.mdc</code></li>
+                    </ul>
+                    <div class="success-box">
+                        Bu dosyaları görüyorsanız, kurulum tamamlanmıştır!
+                    </div>
+                </div>
+                
+                <h3>Adım 4: Cursor'da Pratik Klasörünü Açma</h3>
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <h4>Cursor'u Açın</h4>
+                    <p>Bilgisayarınızdan Cursor uygulamasını çalıştırın.</p>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <h4>Klasörü Açın</h4>
+                    <p><code>File → Open Folder</code> menüsüne tıklayın</p>
+                    <p>Şu yolu seçin: <code>C:\Users\SizinAdınız\ajan-pratik</code></p>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <h4>Dosyaları Kontrol Edin</h4>
+                    <p>Sol tarafta "Explorer" panelinde:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><code>.cursor</code> klasörünü açın</li>
+                        <li><code>rules</code> klasörünü açın</li>
+                        <li>Üç <code>.mdc</code> dosyasını göreceksiniz</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- PRATIK UYGULAMALAR -->
+            <section>
+                <h2>💡 4 Pratik Uygulama</h2>
+                
+                <div class="info-box">
+                    <strong>Pratik Kuralı:</strong> Her pratik için yeni bir sohbet açın. Önceki sohbetin rolü yeni işe karışmasın.
+                </div>
+                
+                <h3>Pratik 1: Kişisel Kart (Frontend Developer)</h3>
+                <p><strong>Süre:</strong> 10 dakika | <strong>Ajan:</strong> Frontend Developer | <strong>Çıktı:</strong> index.html dosyası</p>
+                
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <h4>Cursor'da Yeni Sohbet Açın</h4>
+                    <p>"+" simgesine tıklayın veya <code>Ctrl+L</code> tuşuna basın.</p>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <h4>Ajanı Seçin</h4>
+                    <p>Sohbet kutusunda <code>@</code> yazın.</p>
+                    <p>Açılan listeden <code>@engineering-frontend-developer</code> seçin.</p>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <h4>Görevi Kopyalayın</h4>
+                    <p>Şu metni sohbet kutusuna yapıştırın:</p>
+                    <div class="code-block" data-label="Görev Metni">
+Frontend Developer olarak çalış.
+
+Tek dosyalık bir sayfa yaz: kişisel kart.
+
+Sayfada şunlar olmalı:
+- Bir ad alanı
+- Kendini tanıtan bir cümle (maksimum 10 kelime)
+- Üç maddelik bir liste (örnek: yetenekler, ilgiler, hedefler)
+- Bir aksiyon düğmesi (örnek: "Beni İşe Al" veya "Mesaj Gönder")
+
+Sayfanın mobil telefonda (smartphone) da okunsun.
+
+Dosyayı bu klasöre "index.html" olarak kaydet.
+
+Bitince, seçtiğin tasarım kararlarını (renk, font, düzen) beş maddede Türkçe açıkla.
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <h4>Gönder ve Cevabı Bekle</h4>
+                    <p>Mesajı gönder. Claude kodu yazacak, index.html dosyası oluşturacak.</p>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">5</span>
+                    <h4>Sonucu Kontrol Et</h4>
+                    <p>File Explorer'de <code>C:\Users\SizinAdınız\ajan-pratik\index.html</code> dosyasını aç.</p>
+                    <p>Veya Cursor'da sağ tıklayıp "Open in Browser" seç.</p>
+                    <p><strong>Beklenen sonuç:</strong> Güzel tasarlanmış, mobil uyumlu bir kişisel kart görmelisiniz.</p>
+                </div>
+                
+                <h3>Pratik 2: Yayına Hazır Mı? (Reality Checker)</h3>
+                <p><strong>Süre:</strong> 8 dakika | <strong>Ajan:</strong> Reality Checker | <strong>Çıktı:</strong> Denetim raporu</p>
+                
+                <div class="info-box">
+                    <strong>Ön koşul:</strong> Pratik 1'de oluşturduğun index.html dosyası olmalı.
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <h4>Yeni Sohbet Aç</h4>
+                    <p><code>Ctrl+L</code> ile yeni sohbet başlat.</p>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <h4>Reality Checker Ajanını Seç</h4>
+                    <p><code>@</code> yazıp <code>@testing-reality-checker</code> seç.</p>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <h4>Görevi Kopyala</h4>
+                    <div class="code-block" data-label="Görev Metni">
+Reality Checker olarak çalış.
+
+Şu dosya var: index.html
+
+Bu dosya yayına hazır mı? Kontrol et:
+- Responsive tasarım: mobil ve masaüstüde çalışıyor mu?
+- Erişilebilirlik: ekran okuyucu kullanıcıları için uygun mu?
+- Performans: sayfa hızlı yükleniyor mu?
+- Tarayıcı uyumluluğu: Chrome, Firefox, Safari'de çalışıyor mu?
+- SEO: <meta> etiketleri ve başlık var mı?
+
+Bulduğun tüm sorunları ve önerileri Türkçe listele.
+10 puan üzerinden bir puan ver (10 = mükemmel, yayına hazır).
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <h4>Cevabı Analiz Et</h4>
+                    <p>Reality Checker ajanı dosyayı analiz edecek ve tavsiyeler verecek.</p>
+                    <p>Bu tavsiyeleri not et, sonraki adımda kullanacaksın.</p>
+                </div>
+                
+                <h3>Pratik 3: Eğlenceli Dokunuş (Whimsy Injector)</h3>
+                <p><strong>Süre:</strong> 10 dakika | <strong>Ajan:</strong> Whimsy Injector | <strong>Çıktı:</strong> Geliştirilmiş HTML</p>
+                
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <h4>Yeni Sohbet Aç ve Ajanı Seç</h4>
+                    <p><code>Ctrl+L</code> ile yeni sohbet aç, <code>@design-whimsy-injector</code> seç.</p>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <h4>Görevi Kopyala</h4>
+                    <div class="code-block" data-label="Görev Metni">
+Whimsy Injector olarak çalış.
+
+Şu dosya var: index.html (kişisel kart)
+
+Sayfaya eğlenceli ve işlevsel dokunuşlar ekle:
+- Hover etkinlikleri (örnek: düğmeye fare gelince rengi değişsin)
+- Geçiş efektleri (smooth transitions)
+- İnteraktif animasyonlar (örnek: sayfayı açınca öğeler kayarak gelsinn)
+- İlginç ama kullanışlı detaylar (örnek: karakterli tipografi)
+
+Bu eklemeler sayfanın işlevselliğini bozmasın.
+Eklediğin her şeyin bir amacı olsun (sadece dekoratif değil).
+
+Kodu yazıp dosyayı index.html olarak kaydet.
+
+Türkçe olarak: neden bu seçimleri yaptığını ve her efektin amacını açıkla.
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <h4>Sonucu Kontrol Et</h4>
+                    <p>Dosyayı tarayıcıda açıp animasyonları ve efektleri gör.</p>
+                </div>
+                
+                <h3>Pratik 4: Tamamlanmış Ürünü İyileştirme (Üç Ajan Beraber)</h3>
+                <p><strong>Süre:</strong> 15 dakika | <strong>Ajan:</strong> Sırayla 3 ajan | <strong>Çıktı:</strong> Son hali verilmiş sayfa</p>
+                
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <h4>Yeni Sohbet: Frontend Developer</h4>
+                    <p><code>Ctrl+L</code> yeni sohbet, <code>@engineering-frontend-developer</code> seç.</p>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <h4>Görevi Kopyala</h4>
+                    <div class="code-block" data-label="Görev Metni">
+Frontend Developer olarak çalış.
+
+index.html dosyasını gözden geçir.
+İyileştir:
+- Kod yapısını temizle (semantic HTML)
+- CSS'i optimize et
+- Tüm modern tarayıcılarda çalışmasını sağla
+- Performansı iyileştir
+
+Değişiklikleri yap ve dosyayı kaydet.
+Yapılan değişiklikleri Türkçe listele.
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <h4>Adım 2: Reality Checker</h4>
+                    <p>Yeni sohbet aç, @testing-reality-checker seç.</p>
+                    <div class="code-block" data-label="Görev Metni">
+Reality Checker olarak çalış.
+
+index.html'i son kez kontrol et.
+Yayına hazır mı? Evet ise puanla.
+Hayır ise eksikleri listele ve tavsiye ver.
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <h4>Adım 3: Whimsy Injector (Son Dokunuş)</h4>
+                    <p>Yeni sohbet aç, @design-whimsy-injector seç.</p>
+                    <div class="code-block" data-label="Görev Metni">
+Whimsy Injector olarak çalış.
+
+index.html'e son kez göz at.
+Yapılabilecek son eğlenceli ve ince dokunuşlar öner.
+Varsa kodu yazıp dosyayı güncelle.
+
+Öneri olduğu kadar da uygula - son halini kaydet!
+                    </div>
+                </div>
+            </section>
+
+            <!-- HATA ÇÖZMELER -->
+            <section>
+                <h2>🐛 Sık Karşılaşılan Sorunlar ve Çözümleri</h2>
+                
+                <h3>Sorun 1: "bash komutu bulunamadı"</h3>
+                <div class="step">
+                    <span class="step-number">?</span>
+                    <h4>Hata Mesajı</h4>
+                    <p><code>bash : The term 'bash' is not recognized</code></p>
+                </div>
+                <div class="step">
+                    <span class="step-number">✓</span>
+                    <h4>Çözüm</h4>
+                    <p>Git for Windows yüklü değil veya PATH'te değil. Kurulumu kontrol edin:</p>
+                    <div class="code-block" data-label="PowerShell">& "C:\Program Files\Git\bin\bash.exe" "$env:USERPROFILE/agency-agents/scripts/install.sh" --tool cursor --agent engineering-frontend-developer,design-whimsy-injector,testing-reality-checker</div>
+                </div>
+                
+                <h3>Sorun 2: ".cursor/rules klasörü oluşulmadı"</h3>
+                <div class="step">
+                    <span class="step-number">?</span>
+                    <h4>Hata Mesajı</h4>
+                    <p>Komut çalıştı ama <code>.cursor\rules</code> klasörü yoksa</p>
+                </div>
+                <div class="step">
+                    <span class="step-number">✓</span>
+                    <h4>Çözüm</h4>
+                    <p>Kurulum komutu doğru klasörde çalıştırılmamış olabilir.</p>
+                    <div class="code-block" data-label="PowerShell">cd C:\Users\SizinAdınız\ajan-pratik
+pwd  # Kontrol et, ajan-pratik klasöründe misin?
+bash "$env:USERPROFILE/agency-agents/scripts/install.sh" --tool cursor --agent engineering-frontend-developer,design-whimsy-injector,testing-reality-checker --dry-run</div>
+                    <p><code>--dry-run</code> bayrağı dosya yazmadan kurulum planını gösterir. Sonra bayrağı kaldırıp çalıştır.</p>
+                </div>
+                
+                <h3>Sorun 3: "Ajanın cevabı genel, kuralı kullanmamış gibi görünüyor"</h3>
+                <div class="step">
+                    <span class="step-number">?</span>
+                    <h4>Belirtiler</h4>
+                    <p>Claude aynen yanıt vermiş, Frontend Developer veya Reality Checker gibi davranmamış.</p>
+                </div>
+                <div class="step">
+                    <span class="step-number">✓</span>
+                    <h4>Çözüm</h4>
+                    <p>İki nedeni olabilir:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>Ajan seçilmemiş:</strong> <code>@</code> yazıp doğru ajanı seçtin mi? Sohbet kutusunda ajanın adı görünmelidir.</li>
+                        <li><strong>Yanlış klasör açık:</strong> Cursor'da açık klasör <code>ajan-pratik</code> mı? File → Open Folder ile kontrol et.</li>
+                        <li><strong>alwaysApply ayarı:</strong> Bir .mdc dosyasını açıp içine "alwaysApply: true" yazısı var mı? Eğer varsa "false" yap. Sonra <code>@</code> ile manuel seç.</li>
+                    </ul>
+                </div>
+                
+                <h3>Sorun 4: Depo klonu "not a git repository" hatası veriyor</h3>
+                <div class="step">
+                    <span class="step-number">?</span>
+                    <h4>Hata Mesajı</h4>
+                    <p><code>fatal: not a git repository</code></p>
+                </div>
+                <div class="step">
+                    <span class="step-number">✓</span>
+                    <h4>Çözüm</h4>
+                    <p>Klonu silip yeniden yap:</p>
+                    <div class="code-block" data-label="PowerShell">cd $env:USERPROFILE
+rm -r agency-agents  # Klasörü sil
+git clone https://github.com/msitarzewski/agency-agents.git  # Yeniden klonla
+cd agency-agents
+Get-ChildItem agents | Measure-Object # 18 klasör var mı kontrol et</div>
+                </div>
+                
+                <h3>Sorun 5: Cursor'da açılan dosyada index.html oluşmadı</h3>
+                <div class="step">
+                    <span class="step-number">?</span>
+                    <h4>Belirtiler</h4>
+                    <p>Claude sohbette kodu yazıp gönderdi ama dosya klasörde görünmüyor.</p>
+                </div>
+                <div class="step">
+                    <span class="step-number">✓</span>
+                    <h4>Çözüm</h4>
+                    <p>Claude, sohbette göstermesine rağmen dosyayı yazmamış olabilir.</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Sohbette Claude'dan "dosyayı ajan-pratik klasörine index.html olarak kaydet" diye açıkça iste.</li>
+                        <li>Veya sen Cursor'da yeni dosya oluştur (<code>Ctrl+N</code>), kodu yapıştır, <code>Ctrl+S</code> ile <code>index.html</code> olarak kaydet.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- İLERİ SEVIYE KONULAR -->
+            <section>
+                <h2>🚀 Daha Sonra Öğrenecekler</h2>
+                
+                <p>İlk 4 pratik bittikten sonra, şunları keşfedebilirsin:</p>
+                
+                <h3>1. Yeni Ajanlar Ekleme</h3>
+                <p>Test bölümünün tüm ajanlarını eklemek isterseniz:</p>
+                <div class="code-block" data-label="PowerShell">cd C:\Users\SizinAdınız\ajan-pratik
+bash "$env:USERPROFILE/agency-agents/scripts/install.sh" --tool cursor --division testing</div>
+                <p><code>--division</code> bayrağı belirli bir bölümün tüm ajanlarını kurar.</p>
+                
+                <h3>2. Diğer Araçlarla Uyumluluk</h3>
+                <p>Cursor yerine VSCode, GitHub Copilot veya diğer araçları kullanmak isterseniz:</p>
+                <table>
+                    <tr>
+                        <th>Araç</th>
+                        <th>Kurulum Komutu</th>
+                        <th>Dosya Yolu</th>
+                    </tr>
+                    <tr>
+                        <td>VSCode</td>
+                        <td><code>--tool vscode</code></td>
+                        <td><code>.vscode/extensions/agents</code></td>
+                    </tr>
+                    <tr>
+                        <td>GitHub Copilot</td>
+                        <td><code>--tool copilot</code></td>
+                        <td><code>~/.github/agents</code></td>
+                    </tr>
+                    <tr>
+                        <td>Windsurf</td>
+                        <td><code>--tool windsurf</code></td>
+                        <td><code>.windsurfrules</code></td>
+                    </tr>
+                </table>
+                
+                <h3>3. Kendi Ajanını Oluşturma</h3>
+                <p>Depoda şablon dosyaları var. Kendi uzman kurallarını yazabilirsin - örnek: "Türkçe İçerik Uzmanı" veya "API Tasarımcı".</p>
+                
+                <h3>4. Tüm Deposu Öğrenme</h3>
+                <p>279 ajanı incelemek için:</p>
+                <div class="code-block" data-label="PowerShell">bash "$env:USERPROFILE/agency-agents/scripts/install.sh" --list agents | Out-File agents-list.txt
+# agents-list.txt dosyasını aç ve göz at</div>
+            </section>
+
+            <!-- KAYNAKLAR -->
+            <section>
+                <h2>📚 Kaynaklar ve Linkler</h2>
+                
+                <div class="sidebar">
+                    <h4>Resmi Kaynaklar</h4>
+                    <ul>
+                        <li><strong>GitHub Deposu:</strong> github.com/msitarzewski/agency-agents</li>
+                        <li><strong>Resmi Web Sitesi:</strong> agencyagents.app</li>
+                        <li><strong>Cursor Kurulum Notu:</strong> Depo içinde integrations/cursor/README.md</li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar">
+                    <h4>Kullanışlı Komutlar (Hızlı Referans)</h4>
+                    <ul>
+                        <li><code>./scripts/install.sh --help</code> - Tüm seçenekleri görmek</li>
+                        <li><code>./scripts/install.sh --list agents</code> - Tüm ajanları listelemek</li>
+                        <li><code>./scripts/install.sh --list teams</code> - Tüm bölümleri listelemek</li>
+                        <li><code>./scripts/install.sh --dry-run</code> - Kurulumu test etmek</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- KAPANIŞ -->
+            <section>
+                <h2>✨ Tamamlanması Kutlusu!</h2>
+                
+                <div class="success-box">
+                    <strong>Başarıyla 4 pratik yaptınız!</strong>
+                    <p style="margin-top: 10px;">Artık:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Agency Agents sistemini anladınız</li>
+                        <li>Ajanları kurup Cursor'da kullanabiliyorsunuz</li>
+                        <li>Frontend, design ve testing ajanlarıyla çalışabiliyorsunuz</li>
+                        <li>Yeni ajanlar eklemeyi biliyorsunuz</li>
+                    </ul>
+                </div>
+                
+                <h3>Sonraki Adımlar</h3>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Kendi projelerinizde Agency Agents'ı kullanın</li>
+                    <li>Yeni bölümleri keşfedin (Marketing, Security, Research vs.)</li>
+                    <li>Depoyu takip edin - yeni ajanlar sürekli ekleniyor</li>
+                    <li>Depoya katkı yapın (yeni ajan fikriniz varsa)</li>
+                </ul>
+                
+                <div class="info-box" style="margin-top: 20px;">
+                    <strong>💡 İpucu:</strong> Agency Agents, bu rehberi bitirdikten sonra yeni beceriler öğrenme araçı olur. Her ajanla çalışırken, o alanın en iyi uygulamalarını öğrenirsiniz. Frontend Developer ile responsive tasarım, Reality Checker ile test stratejisi gibi.
+                </div>
+            </section>
+        </div>
+        
+        <footer>
+            <p>Agency Agents Windows Rehberi - Junior Developer Versiyonu</p>
+            <p>Lisans: MIT (Orijinal repo) | Rehber: 2025 | Güncellenmiş detaylı versiyon</p>
+        </footer>
+    </div>
+<script>window.parent.postMessage({ action: "ready" }, "*"); 
+ 
+window.console = new Proxy(console, {
+  get(target, prop) {
+    if (['log', 'warn', 'error'].includes(prop)) {
+      return new Proxy(target[prop], {
+        apply(fn, thisArg, args) {
+          fn.apply(thisArg, args);
+          window.parent.postMessage({ action: 'console', 
+            type: prop, 
+            args: args.map((arg) => {
+              try {
+                return JSON.stringify(arg).replace(/^["']|["']$/g, '');
+              } catch (e) {
+                return arg;
+              }
+            }) 
+          }, '*');
+        }
+      });
+    }
+    return target[prop];
+  }
+});
+</script></body>
+</html>
